@@ -16,20 +16,22 @@ from monai.transforms import(
 
 def build_dataloader(args):
 
-    train_images = sorted(glob.glob(os.path.join(args.dataset_dir, "train", "imagesTr", "*.nii.gz")))
-    val_images = sorted(glob.glob(os.path.join(args.dataset_dir, "val", "imagesTr", "*.nii.gz")))
-    train_labels = sorted(glob.glob(os.path.join(args.dataset_dir, "train", "labelsTr", "*.nii.gz")))
-    val_labels = sorted(glob.glob(os.path.join(args.dataset_dir, "val", "labelsTr", "*.nii.gz")))
-    train_files = [{"image": image_name, "label": label_name} for image_name, label_name in zip(train_images, train_labels)]
-    val_files = [{"image": image_name, "label": label_name} for image_name, label_name in zip(val_images, val_labels)]
+    # load data
+    train_mri = glob.glob(os.path.join(args.dataset_dir, "train", "*.nii.gz"))
+    val_mri = glob.glob(os.path.join(args.dataset_dir, "val", "*.nii.gz"))
+    train_labels = glob.glob(os.path.join(args.mask_dir, "train", "*.nii.gz"))
+    val_labels = glob.glob(os.path.join(args.mask_dir, "val", "*.nii.gz"))
+    train_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(train_mri, train_labels)]
+    val_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(val_mri, val_labels)]
 
+    # augmentation
     train_transforms = Compose([
-        LoadImaged(keys=["image", "label"]),
-        EnsureChannelFirstd(keys=["image", "label"]),
-        Orientationd(keys=["image", "label"], axcodes="RAS"),
-        Spacingd(keys=["image", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear","bilinear", "nearest")),
+        LoadImaged(keys=["mri", "label"]),
+        EnsureChannelFirstd(keys=["mri", "label"]),
+        Orientationd(keys=["mri", "label"], axcodes="RAS"),
+        Spacingd(keys=["mri", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear", "nearest")),
         RandCropByPosNegLabeld(
-            keys=["image", "label"],
+            keys=["mri", "label"],
             label_key="label",
             spatial_size=(96, 96, 96),
             pos=1,
@@ -39,15 +41,18 @@ def build_dataloader(args):
         ),
     ])
     val_transforms = Compose([
-        LoadImaged(keys=["image", "label"]),
-        EnsureChannelFirstd(keys=["image", "label"]),
-        Orientationd(keys=["image", "label"], axcodes="RAS"),
-        Spacingd(keys=["image", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear","bilinear", "nearest")),
+        LoadImaged(keys=["mri", "label"]),
+        EnsureChannelFirstd(keys=["mri", "label"]),
+        Orientationd(keys=["mri", "label"], axcodes="RAS"),
+        Spacingd(keys=["mri", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear", "nearest")),
     ])
 
-    train_ds = CacheDataset(data=train_files, transform=train_transforms, cache_rate=1.0, num_workers=4)
-    val_ds = CacheDataset(data=val_files, transform=val_transforms, cache_rate=1.0, num_workers=4)    
-    train_loader = DataLoader(train_ds, batch_size=2, shuffle=True, num_workers=4)
-    val_loader = DataLoader(val_ds, batch_size=1, num_workers=4)
+    # maek dataset
+    train_ds = CacheDataset(data=train_paths, transform=train_transforms, cache_rate=1.0, num_workers=4)
+    val_ds = CacheDataset(data=val_paths, transform=val_transforms, cache_rate=1.0, num_workers=4)    
+    
+    # make dataloader
+    train_loader = DataLoader(train_ds, batch_size=args.train_batch_size, shuffle=True, num_workers=4)
+    val_loader = DataLoader(val_ds, batch_size=args.eval_batch_size, num_workers=4)
 
     return train_loader, val_loader
