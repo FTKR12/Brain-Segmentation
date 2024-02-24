@@ -3,7 +3,7 @@ import sys
 import os
 from os import path
 
-def setup_logger(name, save_dir):
+def setup_logger(name, save_dir, is_Train):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
@@ -13,7 +13,10 @@ def setup_logger(name, save_dir):
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     
-    log_name = 'log.txt'
+    if is_Train:
+        log_name = 'log_train.txt'
+    else:
+        log_name = 'log_test.txt'
     fh = logging.FileHandler(os.path.join(save_dir, log_name), mode='w')
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)

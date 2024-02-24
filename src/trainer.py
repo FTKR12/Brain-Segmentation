@@ -86,7 +86,7 @@ class Trainer():
 
                 out = sliding_window_inference(x, self.args.roi, self.args.sw_batch, self.model)
                 out = [self.post_pred(i) for i in decollate_batch(out)]
-                label = [self.post_label(i) for i in decollate_batch(val_labels)]
+                label = [self.post_label(i) for i in decollate_batch(label)]
 
                 self.dice_metric(y_pred=out, y=label)
         

@@ -19,10 +19,13 @@ def build_dataloader(args):
     # load data
     train_mri = glob.glob(os.path.join(args.dataset_dir, "train", "*.nii.gz"))
     val_mri = glob.glob(os.path.join(args.dataset_dir, "val", "*.nii.gz"))
+    test_mri = glob.glob(os.path.join(args.dataset_dir, "test", "*.nii.gz"))
     train_labels = glob.glob(os.path.join(args.mask_dir, "train", "*.nii.gz"))
     val_labels = glob.glob(os.path.join(args.mask_dir, "val", "*.nii.gz"))
+    test_labels = glob.glob(os.path.join(args.mask_dir, "test", "*.nii.gz"))
     train_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(train_mri, train_labels)]
     val_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(val_mri, val_labels)]
+    test_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(test_mri, test_labels)]
 
     # augmentation
     train_transforms = Compose([
@@ -49,10 +52,12 @@ def build_dataloader(args):
 
     # maek dataset
     train_ds = CacheDataset(data=train_paths, transform=train_transforms, cache_rate=1.0, num_workers=4)
-    val_ds = CacheDataset(data=val_paths, transform=val_transforms, cache_rate=1.0, num_workers=4)    
+    val_ds = CacheDataset(data=val_paths, transform=val_transforms, cache_rate=1.0, num_workers=4)
+    test_ds = CacheDataset(data=test_paths, transform=val_transforms, cache_rate=1.0, num_workers=4)
     
     # make dataloader
     train_loader = DataLoader(train_ds, batch_size=args.train_batch_size, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_ds, batch_size=args.eval_batch_size, num_workers=4)
+    test_loader = DataLoader(test_ds, batch_size=args.test_batch_size, num_workers=4)
 
-    return train_loader, val_loader
+    return train_loader, val_loader, test_loader

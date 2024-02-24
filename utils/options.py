@@ -25,6 +25,7 @@ def get_args():
 
     ########## eval options ##########
     parser.add_argument('--eval_batch_size', default=4, type=int)
+    parser.add_argument('--test_batch_size', default=4, type=int)
     parser.add_argument('--roi', default=(128, 128, 96), type=tuple)
     parser.add_argument('--sw_batch', default=2, type=int)
 

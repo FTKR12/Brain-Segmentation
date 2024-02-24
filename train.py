@@ -8,9 +8,9 @@ from src.trainer import Trainer
 from src.models import build_model
 
 
-def main(args. logger):
+def main(args, logger):
 
-    train_loader, valid_loader = build_dataloader(args)
+    train_loader, valid_loader, _ = build_dataloader(args)
     model = build_model(args.model_name)
     logger.info(
         f'{'-'*100}\n'
@@ -21,7 +21,7 @@ def main(args. logger):
     logger.info('-'*100)
     trainer = Trainer(args, model, train_loader, valid_loader)
     trainer.run()
-    
+
     return
 
 if __name__ == '__main__':
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     os.makedirs(f'{args.output_dir}/{args.name}', exist_ok=True)
     args.output_dir = f'{args.output_dir}/{args.name}'
 
-    logger = setup_logger('Brain Segmentation', f'{args.output_dir}')
+    logger = setup_logger('Brain Segmentation', f'{args.output_dir}', is_Train=True)
     logger.info(str(args).replace(',','\n'))
 
     main(args, logger)
