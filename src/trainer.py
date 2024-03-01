@@ -1,5 +1,6 @@
 import os
 import pickle
+from tqdm import tqdm
 
 import torch
 import torch.nn as nn
@@ -42,7 +43,7 @@ class Trainer():
         self.post_label = Compose([AsDiscrete(to_onehot=2)])
 
     def run(self):
-        for epoch in self.args.epochs:
+        for epoch in tqdm(range(self.args.epochs)):
             self.train_one_epoch()
             self.eval_one_epoch()
             self.save_checkpoint(epoch)
@@ -56,9 +57,9 @@ class Trainer():
     def train_one_epoch(self):
         self.model.train()
         train_loss = 0
-        for batch in self.train_loader():
+        for batch in self.train_loader:
 
-            x, label = (batch["MRI"].to(self.args.device), batch["label"].to(self.args.device))
+            x, label = batch["image"].to(self.args.device), batch["label"].to(self.args.device)
             # if inputs are multiple such as CT and MRI, remove following commentout
             # x = torch.cat([x1, x2], dim=1)
 
@@ -80,7 +81,7 @@ class Trainer():
 
         with torch.no_grad():
             for batch in self.valid_loader:
-                x, label = (batch["MRI"].to(self.args.device), batch["label"].to(self.args.device))
+                x, label = (batch["image"].to(self.args.device), batch["label"].to(self.args.device))
                 # if inputs are multiple such as CT and MRI, remove following commentout
                 # x = torch.cat([x1, x2], dim=1)
 
@@ -105,10 +106,12 @@ class Trainer():
 
     def print_logs(self, epoch):
         logger.info(
-            f'{'-'*100}\n'
-            f'Epoch: {epoch}\n'
-            f'train loss: {self.loss_logs['train'][epoch]}\n'
-            f'eval metric: {self.metric_logs['eval'][epoch]}\n'
+            "\n"
+            f"{'='*20}\n"
+            f"Epoch: {epoch}\n"
+            f"train loss: {self.loss_logs['train'][epoch]}\n"
+            f"eval metric: {self.metric_logs['eval'][epoch]}\n"
+            f"{'='*20}\n"
         )
 
 

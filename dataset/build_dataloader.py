@@ -17,24 +17,25 @@ from monai.transforms import(
 def build_dataloader(args):
 
     # load data
-    train_mri = glob.glob(os.path.join(args.dataset_dir, "train", "*.nii.gz"))
-    val_mri = glob.glob(os.path.join(args.dataset_dir, "val", "*.nii.gz"))
-    test_mri = glob.glob(os.path.join(args.dataset_dir, "test", "*.nii.gz"))
-    train_labels = glob.glob(os.path.join(args.mask_dir, "train", "*.nii.gz"))
-    val_labels = glob.glob(os.path.join(args.mask_dir, "val", "*.nii.gz"))
-    test_labels = glob.glob(os.path.join(args.mask_dir, "test", "*.nii.gz"))
-    train_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(train_mri, train_labels)]
-    val_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(val_mri, val_labels)]
-    test_paths = [{"mri": mri_path, "label": label_path} for mri_path, label_path in zip(test_mri, test_labels)]
+    train_paths, val_paths, test_paths = [], [], []
+    train_id = glob.glob(f"{args.dataset_dir}/train/*")
+    val_id = glob.glob(f"{args.dataset_dir}/val/*")
+    test_id = glob.glob(f"{args.dataset_dir}/test/*")
+    for data_id in train_id:
+        train_paths.append({"image": f"{data_id}/output_train_{data_id[-3:]}_adc.nii", "label": f"{data_id}/output_train_{data_id[-3:]}_mask.nii"})
+    for data_id in val_id:
+        val_paths.append({"image": f"{data_id}/output_train_{data_id[-3:]}_adc.nii", "label": f"{data_id}/output_train_{data_id[-3:]}_mask.nii"})
+    for data_id in test_id:
+        test_paths.append({"image": f"{data_id}/output_train_{data_id[-3:]}_adc.nii", "label": f"{data_id}/output_train_{data_id[-3:]}_mask.nii"})
 
     # augmentation
     train_transforms = Compose([
-        LoadImaged(keys=["mri", "label"]),
-        EnsureChannelFirstd(keys=["mri", "label"]),
-        Orientationd(keys=["mri", "label"], axcodes="RAS"),
-        Spacingd(keys=["mri", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear", "nearest")),
+        LoadImaged(keys=["image", "label"]),
+        EnsureChannelFirstd(keys=["image", "label"]),
+        Orientationd(keys=["image", "label"], axcodes="RAS"),
+        Spacingd(keys=["image", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear", "nearest")),
         RandCropByPosNegLabeld(
-            keys=["mri", "label"],
+            keys=["image", "label"],
             label_key="label",
             spatial_size=(96, 96, 96),
             pos=1,
@@ -44,10 +45,10 @@ def build_dataloader(args):
         ),
     ])
     val_transforms = Compose([
-        LoadImaged(keys=["mri", "label"]),
-        EnsureChannelFirstd(keys=["mri", "label"]),
-        Orientationd(keys=["mri", "label"], axcodes="RAS"),
-        Spacingd(keys=["mri", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear", "nearest")),
+        LoadImaged(keys=["image", "label"]),
+        EnsureChannelFirstd(keys=["image", "label"]),
+        Orientationd(keys=["image", "label"], axcodes="RAS"),
+        Spacingd(keys=["image", "label"], pixdim=(1.0, 1.0, 1.0), mode=("bilinear", "nearest")),
     ])
 
     # maek dataset

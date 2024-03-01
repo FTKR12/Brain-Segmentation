@@ -13,9 +13,9 @@ def main(args, logger):
     train_loader, valid_loader, _ = build_dataloader(args)
     model = build_model(args.model_name)
     logger.info(
-        f'{'-'*100}\n'
-        f'{model}\n'
-        f'{'-'*100}\n'
+        f"{'-'*100}\n"
+        f"{model}\n"
+        f"{'-'*100}\n"
     )
     logger.info(model)
     logger.info('-'*100)

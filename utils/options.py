@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument('--spatial_size', default=(96, 96, 96), type=tuple)
 
     ########## model options ##########
-    parser.add_argument('--model' default='segresnet')
+    parser.add_argument('--model_name', default='segresnet')
     # TODO: add mdoel args
 
     ########## training options ##########
