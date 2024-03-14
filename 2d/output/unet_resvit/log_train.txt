@@ -1,0 +1,714 @@
+2024-03-12 22:12:02,049 Brain Segmentation INFO: Namespace(background=True
+ device='cuda'
+ epochs=300
+ eval_batch_size=1
+ image_dir='/mnt/strokeapp/Datasets/Seg_ctmri'
+ input='fake_mri'
+ lr=0.001
+ mask_dir='/mnt/strokeapp/Datasets/Seg_mask'
+ model_name='unet'
+ name='unet_resvit'
+ output_dir='output/unet_resvit'
+ roi=(96
+ 96)
+ seed=123
+ spatial_size=(96
+ 96
+ 96)
+ sw_batch=4
+ synthesize_model='resvit'
+ test_batch_size=4
+ train_batch_size=16
+ weight_decay=0.0001)
+2024-03-12 22:12:02,108 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+UNet(
+  (model): Sequential(
+    (0): ResidualUnit(
+      (conv): Sequential(
+        (unit0): Convolution(
+          (conv): Conv2d(1, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+          (adn): ADN(
+            (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+            (D): Dropout(p=0.0, inplace=False)
+            (A): PReLU(num_parameters=1)
+          )
+        )
+        (unit1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (adn): ADN(
+            (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+            (D): Dropout(p=0.0, inplace=False)
+            (A): PReLU(num_parameters=1)
+          )
+        )
+      )
+      (residual): Conv2d(1, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    )
+    (1): SkipConnection(
+      (submodule): Sequential(
+        (0): ResidualUnit(
+          (conv): Sequential(
+            (unit0): Convolution(
+              (conv): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+              (adn): ADN(
+                (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                (D): Dropout(p=0.0, inplace=False)
+                (A): PReLU(num_parameters=1)
+              )
+            )
+            (unit1): Convolution(
+              (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (adn): ADN(
+                (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                (D): Dropout(p=0.0, inplace=False)
+                (A): PReLU(num_parameters=1)
+              )
+            )
+          )
+          (residual): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        )
+        (1): SkipConnection(
+          (submodule): Sequential(
+            (0): ResidualUnit(
+              (conv): Sequential(
+                (unit0): Convolution(
+                  (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+                  (adn): ADN(
+                    (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                    (D): Dropout(p=0.0, inplace=False)
+                    (A): PReLU(num_parameters=1)
+                  )
+                )
+                (unit1): Convolution(
+                  (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                  (adn): ADN(
+                    (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                    (D): Dropout(p=0.0, inplace=False)
+                    (A): PReLU(num_parameters=1)
+                  )
+                )
+              )
+              (residual): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+            )
+            (1): SkipConnection(
+              (submodule): Sequential(
+                (0): ResidualUnit(
+                  (conv): Sequential(
+                    (unit0): Convolution(
+                      (conv): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+                      (adn): ADN(
+                        (N): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                        (D): Dropout(p=0.0, inplace=False)
+                        (A): PReLU(num_parameters=1)
+                      )
+                    )
+                    (unit1): Convolution(
+                      (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                      (adn): ADN(
+                        (N): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                        (D): Dropout(p=0.0, inplace=False)
+                        (A): PReLU(num_parameters=1)
+                      )
+                    )
+                  )
+                  (residual): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+                )
+                (1): SkipConnection(
+                  (submodule): ResidualUnit(
+                    (conv): Sequential(
+                      (unit0): Convolution(
+                        (conv): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                        (adn): ADN(
+                          (N): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                          (D): Dropout(p=0.0, inplace=False)
+                          (A): PReLU(num_parameters=1)
+                        )
+                      )
+                      (unit1): Convolution(
+                        (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                        (adn): ADN(
+                          (N): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                          (D): Dropout(p=0.0, inplace=False)
+                          (A): PReLU(num_parameters=1)
+                        )
+                      )
+                    )
+                    (residual): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+                  )
+                )
+                (2): Sequential(
+                  (0): Convolution(
+                    (conv): ConvTranspose2d(384, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+                    (adn): ADN(
+                      (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                      (D): Dropout(p=0.0, inplace=False)
+                      (A): PReLU(num_parameters=1)
+                    )
+                  )
+                  (1): ResidualUnit(
+                    (conv): Sequential(
+                      (unit0): Convolution(
+                        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                        (adn): ADN(
+                          (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                          (D): Dropout(p=0.0, inplace=False)
+                          (A): PReLU(num_parameters=1)
+                        )
+                      )
+                    )
+                    (residual): Identity()
+                  )
+                )
+              )
+            )
+            (2): Sequential(
+              (0): Convolution(
+                (conv): ConvTranspose2d(128, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+                (adn): ADN(
+                  (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                  (D): Dropout(p=0.0, inplace=False)
+                  (A): PReLU(num_parameters=1)
+                )
+              )
+              (1): ResidualUnit(
+                (conv): Sequential(
+                  (unit0): Convolution(
+                    (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                    (adn): ADN(
+                      (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                      (D): Dropout(p=0.0, inplace=False)
+                      (A): PReLU(num_parameters=1)
+                    )
+                  )
+                )
+                (residual): Identity()
+              )
+            )
+          )
+        )
+        (2): Sequential(
+          (0): Convolution(
+            (conv): ConvTranspose2d(64, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+            (adn): ADN(
+              (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): PReLU(num_parameters=1)
+            )
+          )
+          (1): ResidualUnit(
+            (conv): Sequential(
+              (unit0): Convolution(
+                (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                (adn): ADN(
+                  (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                  (D): Dropout(p=0.0, inplace=False)
+                  (A): PReLU(num_parameters=1)
+                )
+              )
+            )
+            (residual): Identity()
+          )
+        )
+      )
+    )
+    (2): Sequential(
+      (0): Convolution(
+        (conv): ConvTranspose2d(32, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+        (adn): ADN(
+          (N): InstanceNorm2d(1, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+          (D): Dropout(p=0.0, inplace=False)
+          (A): PReLU(num_parameters=1)
+        )
+      )
+      (1): ResidualUnit(
+        (conv): Sequential(
+          (unit0): Convolution(
+            (conv): Conv2d(1, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (residual): Identity()
+      )
+    )
+  )
+)
+----------------------------------------------------------------------------------------------------
+
+2024-03-12 22:12:02,109 Brain Segmentation INFO: UNet(
+  (model): Sequential(
+    (0): ResidualUnit(
+      (conv): Sequential(
+        (unit0): Convolution(
+          (conv): Conv2d(1, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+          (adn): ADN(
+            (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+            (D): Dropout(p=0.0, inplace=False)
+            (A): PReLU(num_parameters=1)
+          )
+        )
+        (unit1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (adn): ADN(
+            (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+            (D): Dropout(p=0.0, inplace=False)
+            (A): PReLU(num_parameters=1)
+          )
+        )
+      )
+      (residual): Conv2d(1, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    )
+    (1): SkipConnection(
+      (submodule): Sequential(
+        (0): ResidualUnit(
+          (conv): Sequential(
+            (unit0): Convolution(
+              (conv): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+              (adn): ADN(
+                (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                (D): Dropout(p=0.0, inplace=False)
+                (A): PReLU(num_parameters=1)
+              )
+            )
+            (unit1): Convolution(
+              (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (adn): ADN(
+                (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                (D): Dropout(p=0.0, inplace=False)
+                (A): PReLU(num_parameters=1)
+              )
+            )
+          )
+          (residual): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        )
+        (1): SkipConnection(
+          (submodule): Sequential(
+            (0): ResidualUnit(
+              (conv): Sequential(
+                (unit0): Convolution(
+                  (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+                  (adn): ADN(
+                    (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                    (D): Dropout(p=0.0, inplace=False)
+                    (A): PReLU(num_parameters=1)
+                  )
+                )
+                (unit1): Convolution(
+                  (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                  (adn): ADN(
+                    (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                    (D): Dropout(p=0.0, inplace=False)
+                    (A): PReLU(num_parameters=1)
+                  )
+                )
+              )
+              (residual): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+            )
+            (1): SkipConnection(
+              (submodule): Sequential(
+                (0): ResidualUnit(
+                  (conv): Sequential(
+                    (unit0): Convolution(
+                      (conv): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+                      (adn): ADN(
+                        (N): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                        (D): Dropout(p=0.0, inplace=False)
+                        (A): PReLU(num_parameters=1)
+                      )
+                    )
+                    (unit1): Convolution(
+                      (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                      (adn): ADN(
+                        (N): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                        (D): Dropout(p=0.0, inplace=False)
+                        (A): PReLU(num_parameters=1)
+                      )
+                    )
+                  )
+                  (residual): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+                )
+                (1): SkipConnection(
+                  (submodule): ResidualUnit(
+                    (conv): Sequential(
+                      (unit0): Convolution(
+                        (conv): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                        (adn): ADN(
+                          (N): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                          (D): Dropout(p=0.0, inplace=False)
+                          (A): PReLU(num_parameters=1)
+                        )
+                      )
+                      (unit1): Convolution(
+                        (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                        (adn): ADN(
+                          (N): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                          (D): Dropout(p=0.0, inplace=False)
+                          (A): PReLU(num_parameters=1)
+                        )
+                      )
+                    )
+                    (residual): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+                  )
+                )
+                (2): Sequential(
+                  (0): Convolution(
+                    (conv): ConvTranspose2d(384, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+                    (adn): ADN(
+                      (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                      (D): Dropout(p=0.0, inplace=False)
+                      (A): PReLU(num_parameters=1)
+                    )
+                  )
+                  (1): ResidualUnit(
+                    (conv): Sequential(
+                      (unit0): Convolution(
+                        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                        (adn): ADN(
+                          (N): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                          (D): Dropout(p=0.0, inplace=False)
+                          (A): PReLU(num_parameters=1)
+                        )
+                      )
+                    )
+                    (residual): Identity()
+                  )
+                )
+              )
+            )
+            (2): Sequential(
+              (0): Convolution(
+                (conv): ConvTranspose2d(128, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+                (adn): ADN(
+                  (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                  (D): Dropout(p=0.0, inplace=False)
+                  (A): PReLU(num_parameters=1)
+                )
+              )
+              (1): ResidualUnit(
+                (conv): Sequential(
+                  (unit0): Convolution(
+                    (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                    (adn): ADN(
+                      (N): InstanceNorm2d(32, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                      (D): Dropout(p=0.0, inplace=False)
+                      (A): PReLU(num_parameters=1)
+                    )
+                  )
+                )
+                (residual): Identity()
+              )
+            )
+          )
+        )
+        (2): Sequential(
+          (0): Convolution(
+            (conv): ConvTranspose2d(64, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+            (adn): ADN(
+              (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): PReLU(num_parameters=1)
+            )
+          )
+          (1): ResidualUnit(
+            (conv): Sequential(
+              (unit0): Convolution(
+                (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+                (adn): ADN(
+                  (N): InstanceNorm2d(16, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+                  (D): Dropout(p=0.0, inplace=False)
+                  (A): PReLU(num_parameters=1)
+                )
+              )
+            )
+            (residual): Identity()
+          )
+        )
+      )
+    )
+    (2): Sequential(
+      (0): Convolution(
+        (conv): ConvTranspose2d(32, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+        (adn): ADN(
+          (N): InstanceNorm2d(1, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+          (D): Dropout(p=0.0, inplace=False)
+          (A): PReLU(num_parameters=1)
+        )
+      )
+      (1): ResidualUnit(
+        (conv): Sequential(
+          (unit0): Convolution(
+            (conv): Conv2d(1, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (residual): Identity()
+      )
+    )
+  )
+)
+2024-03-12 22:12:02,113 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+2024-03-12 22:12:33,498 Brain Segmentation INFO: model was saved, epoch 0 is the best.
+2024-03-12 22:12:33,499 Brain Segmentation INFO: 
+====================
+Epoch: 0
+train loss: 0.983854014386413
+eval metric: 0.049812473356723785
+====================
+
+2024-03-12 22:13:07,551 Brain Segmentation INFO: model was saved, epoch 1 is the best.
+2024-03-12 22:13:07,552 Brain Segmentation INFO: 
+====================
+Epoch: 1
+train loss: 0.9796389948616746
+eval metric: 0.057645171880722046
+====================
+
+2024-03-12 22:13:53,343 Brain Segmentation INFO: model was saved, epoch 2 is the best.
+2024-03-12 22:13:53,344 Brain Segmentation INFO: 
+====================
+Epoch: 2
+train loss: 0.9747260893865298
+eval metric: 0.06480162590742111
+====================
+
+2024-03-12 22:14:41,574 Brain Segmentation INFO: 
+====================
+Epoch: 3
+train loss: 0.9710164006038379
+eval metric: 0.0346803292632103
+====================
+
+2024-03-12 22:15:29,511 Brain Segmentation INFO: model was saved, epoch 4 is the best.
+2024-03-12 22:15:29,512 Brain Segmentation INFO: 
+====================
+Epoch: 4
+train loss: 0.968050927564662
+eval metric: 0.06919034570455551
+====================
+
+2024-03-12 22:16:17,627 Brain Segmentation INFO: 
+====================
+Epoch: 5
+train loss: 0.965064938831073
+eval metric: 0.05711165815591812
+====================
+
+2024-03-12 22:17:05,612 Brain Segmentation INFO: model was saved, epoch 6 is the best.
+2024-03-12 22:17:05,613 Brain Segmentation INFO: 
+====================
+Epoch: 6
+train loss: 0.9655307712413932
+eval metric: 0.07085894793272018
+====================
+
+2024-03-12 22:17:53,152 Brain Segmentation INFO: model was saved, epoch 7 is the best.
+2024-03-12 22:17:53,153 Brain Segmentation INFO: 
+====================
+Epoch: 7
+train loss: 0.9656660473474892
+eval metric: 0.07653599977493286
+====================
+
+2024-03-12 22:18:40,582 Brain Segmentation INFO: 
+====================
+Epoch: 8
+train loss: 0.9636132306950067
+eval metric: 0.07576912641525269
+====================
+
+2024-03-12 22:19:29,405 Brain Segmentation INFO: 
+====================
+Epoch: 9
+train loss: 0.9640971388547651
+eval metric: 0.07627435028553009
+====================
+
+2024-03-12 22:20:18,120 Brain Segmentation INFO: model was saved, epoch 10 is the best.
+2024-03-12 22:20:18,121 Brain Segmentation INFO: 
+====================
+Epoch: 10
+train loss: 0.9617896632802102
+eval metric: 0.0786762684583664
+====================
+
+2024-03-12 22:21:05,000 Brain Segmentation INFO: 
+====================
+Epoch: 11
+train loss: 0.9625442263580137
+eval metric: 0.07142902165651321
+====================
+
+2024-03-12 22:21:49,929 Brain Segmentation INFO: 
+====================
+Epoch: 12
+train loss: 0.9631842940404851
+eval metric: 0.07396890223026276
+====================
+
+2024-03-12 22:22:41,096 Brain Segmentation INFO: 
+====================
+Epoch: 13
+train loss: 0.9625968859400801
+eval metric: 0.06550014019012451
+====================
+
+2024-03-12 22:23:33,217 Brain Segmentation INFO: 
+====================
+Epoch: 14
+train loss: 0.9617572148000041
+eval metric: 0.0731872171163559
+====================
+
+2024-03-12 22:24:23,706 Brain Segmentation INFO: 
+====================
+Epoch: 15
+train loss: 0.96187269335152
+eval metric: 0.06575001776218414
+====================
+
+2024-03-12 22:25:13,461 Brain Segmentation INFO: 
+====================
+Epoch: 16
+train loss: 0.96098752239699
+eval metric: 0.07682773470878601
+====================
+
+2024-03-12 22:26:05,122 Brain Segmentation INFO: 
+====================
+Epoch: 17
+train loss: 0.9603129348126791
+eval metric: 0.07747393101453781
+====================
+
+2024-03-12 22:26:56,387 Brain Segmentation INFO: 
+====================
+Epoch: 18
+train loss: 0.9611876150292735
+eval metric: 0.07568328082561493
+====================
+
+2024-03-12 22:27:48,024 Brain Segmentation INFO: model was saved, epoch 19 is the best.
+2024-03-12 22:27:48,025 Brain Segmentation INFO: 
+====================
+Epoch: 19
+train loss: 0.9607731866580184
+eval metric: 0.08561904728412628
+====================
+
+2024-03-12 22:28:38,840 Brain Segmentation INFO: 
+====================
+Epoch: 20
+train loss: 0.9631449389521793
+eval metric: 0.07168982177972794
+====================
+
+2024-03-12 22:29:30,391 Brain Segmentation INFO: 
+====================
+Epoch: 21
+train loss: 0.9627907373091226
+eval metric: 0.080808125436306
+====================
+
+2024-03-12 22:30:21,992 Brain Segmentation INFO: 
+====================
+Epoch: 22
+train loss: 0.9615669803273293
+eval metric: 0.07562480121850967
+====================
+
+2024-03-12 22:31:15,826 Brain Segmentation INFO: 
+====================
+Epoch: 23
+train loss: 0.9600241161802764
+eval metric: 0.07878302037715912
+====================
+
+2024-03-12 22:32:07,995 Brain Segmentation INFO: 
+====================
+Epoch: 24
+train loss: 0.9599374167380794
+eval metric: 0.07308769226074219
+====================
+
+2024-03-12 22:33:03,554 Brain Segmentation INFO: 
+====================
+Epoch: 25
+train loss: 0.9599184797656152
+eval metric: 0.07941602170467377
+====================
+
+2024-03-12 22:33:59,224 Brain Segmentation INFO: 
+====================
+Epoch: 26
+train loss: 0.9601809653223202
+eval metric: 0.07417766004800797
+====================
+
+2024-03-12 22:34:55,627 Brain Segmentation INFO: 
+====================
+Epoch: 27
+train loss: 0.9597820078813901
+eval metric: 0.08171229064464569
+====================
+
+2024-03-12 22:35:50,319 Brain Segmentation INFO: model was saved, epoch 28 is the best.
+2024-03-12 22:35:50,320 Brain Segmentation INFO: 
+====================
+Epoch: 28
+train loss: 0.9587489866441296
+eval metric: 0.08685700595378876
+====================
+
+2024-03-12 22:36:46,168 Brain Segmentation INFO: 
+====================
+Epoch: 29
+train loss: 0.9585425377853455
+eval metric: 0.07754935324192047
+====================
+
+2024-03-12 22:37:41,878 Brain Segmentation INFO: 
+====================
+Epoch: 30
+train loss: 0.9618755705574508
+eval metric: 0.0838618129491806
+====================
+
+2024-03-12 22:38:36,932 Brain Segmentation INFO: 
+====================
+Epoch: 31
+train loss: 0.9595700939816814
+eval metric: 0.08226383477449417
+====================
+
+2024-03-12 22:39:32,135 Brain Segmentation INFO: 
+====================
+Epoch: 32
+train loss: 0.9589946885262767
+eval metric: 0.07675197720527649
+====================
+
+2024-03-12 22:40:28,759 Brain Segmentation INFO: 
+====================
+Epoch: 33
+train loss: 0.9601750216016205
+eval metric: 0.07996965199708939
+====================
+
+2024-03-12 22:41:25,747 Brain Segmentation INFO: 
+====================
+Epoch: 34
+train loss: 0.9603109103377148
+eval metric: 0.0784933790564537
+====================
+
+2024-03-12 22:42:21,994 Brain Segmentation INFO: 
+====================
+Epoch: 35
+train loss: 0.9587747070097155
+eval metric: 0.08429695665836334
+====================
+
+2024-03-12 22:43:17,955 Brain Segmentation INFO: 
+====================
+Epoch: 36
+train loss: 0.9586426231168932
+eval metric: 0.07629964500665665
+====================
+
