@@ -1,0 +1,2543 @@
+2024-03-17 22:40:29,999 Brain Segmentation INFO: Namespace(background=True
+ device='cuda'
+ epochs=300
+ eval_batch_size=1
+ fig_dir='fig'
+ image_dir='/mnt/strokeapp/Datasets/Seg_ctmri_2d'
+ input='fake_mri'
+ lr=0.001
+ mask_dir='/mnt/strokeapp/Datasets/Seg_mask_2d'
+ model_name='segresnet'
+ name='segresnet_resvit_res_ls'
+ output_dir='output/segresnet_resvit_res_ls'
+ roi=(128
+ 128)
+ seed=123
+ spatial_size=(96
+ 96
+ 96)
+ sw_batch=4
+ synthesize_model='resvit_res_ls'
+ test_batch_size=4
+ train_batch_size=16
+ weight_decay=0.0001)
+2024-03-17 22:40:30,051 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+SegResNet(
+  (act_mod): ReLU(inplace=True)
+  (convInit): Convolution(
+    (conv): Conv2d(1, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  )
+  (down_layers): ModuleList(
+    (0): Sequential(
+      (0): Identity()
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (1): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(8, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (2): ResBlock(
+        (norm1): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (2): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (2): ResBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (3): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (2): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (3): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (4): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (up_layers): ModuleList(
+    (0): Sequential(
+      (0): ResBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (1): Sequential(
+      (0): ResBlock(
+        (norm1): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (2): Sequential(
+      (0): ResBlock(
+        (norm1): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (up_samples): ModuleList(
+    (0): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+      (1): UpSample(
+        (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=bilinear)
+      )
+    )
+    (1): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(32, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+      (1): UpSample(
+        (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=bilinear)
+      )
+    )
+    (2): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(16, 8, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+      (1): UpSample(
+        (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=bilinear)
+      )
+    )
+  )
+  (conv_final): Sequential(
+    (0): GroupNorm(8, 8, eps=1e-05, affine=True)
+    (1): ReLU(inplace=True)
+    (2): Convolution(
+      (conv): Conv2d(8, 1, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+----------------------------------------------------------------------------------------------------
+
+2024-03-17 22:40:30,052 Brain Segmentation INFO: SegResNet(
+  (act_mod): ReLU(inplace=True)
+  (convInit): Convolution(
+    (conv): Conv2d(1, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  )
+  (down_layers): ModuleList(
+    (0): Sequential(
+      (0): Identity()
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (1): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(8, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (2): ResBlock(
+        (norm1): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (2): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (2): ResBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (3): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+      (1): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (2): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (3): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+      (4): ResBlock(
+        (norm1): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 64, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (up_layers): ModuleList(
+    (0): Sequential(
+      (0): ResBlock(
+        (norm1): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (1): Sequential(
+      (0): ResBlock(
+        (norm1): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 16, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+    (2): Sequential(
+      (0): ResBlock(
+        (norm1): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (norm2): GroupNorm(8, 8, eps=1e-05, affine=True)
+        (act): ReLU(inplace=True)
+        (conv1): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+        (conv2): Convolution(
+          (conv): Conv2d(8, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (up_samples): ModuleList(
+    (0): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+      (1): UpSample(
+        (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=bilinear)
+      )
+    )
+    (1): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(32, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+      (1): UpSample(
+        (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=bilinear)
+      )
+    )
+    (2): Sequential(
+      (0): Convolution(
+        (conv): Conv2d(16, 8, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+      (1): UpSample(
+        (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=bilinear)
+      )
+    )
+  )
+  (conv_final): Sequential(
+    (0): GroupNorm(8, 8, eps=1e-05, affine=True)
+    (1): ReLU(inplace=True)
+    (2): Convolution(
+      (conv): Conv2d(8, 1, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+2024-03-17 22:40:30,054 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+2024-03-17 22:41:00,437 Brain Segmentation INFO: model was saved, epoch 0 is the best.
+2024-03-17 22:41:00,437 Brain Segmentation INFO: 
+====================
+Epoch: 0
+train loss: 0.984636358035508
+eval metric: 0.05959518998861313
+====================
+
+2024-03-17 22:41:27,264 Brain Segmentation INFO: 
+====================
+Epoch: 1
+train loss: 0.9816286813828253
+eval metric: 0.05170702934265137
+====================
+
+2024-03-17 22:41:55,351 Brain Segmentation INFO: model was saved, epoch 2 is the best.
+2024-03-17 22:41:55,352 Brain Segmentation INFO: 
+====================
+Epoch: 2
+train loss: 0.9786184180167413
+eval metric: 0.06513682752847672
+====================
+
+2024-03-17 22:42:26,143 Brain Segmentation INFO: 
+====================
+Epoch: 3
+train loss: 0.9790614715186499
+eval metric: 0.061575137078762054
+====================
+
+2024-03-17 22:42:56,070 Brain Segmentation INFO: 
+====================
+Epoch: 4
+train loss: 0.9768545710912315
+eval metric: 0.056385256350040436
+====================
+
+2024-03-17 22:43:26,404 Brain Segmentation INFO: model was saved, epoch 5 is the best.
+2024-03-17 22:43:26,405 Brain Segmentation INFO: 
+====================
+Epoch: 5
+train loss: 0.9742672456208096
+eval metric: 0.06724636256694794
+====================
+
+2024-03-17 22:43:57,191 Brain Segmentation INFO: model was saved, epoch 6 is the best.
+2024-03-17 22:43:57,191 Brain Segmentation INFO: 
+====================
+Epoch: 6
+train loss: 0.9729319041775119
+eval metric: 0.0692325308918953
+====================
+
+2024-03-17 22:44:27,648 Brain Segmentation INFO: model was saved, epoch 7 is the best.
+2024-03-17 22:44:27,649 Brain Segmentation INFO: 
+====================
+Epoch: 7
+train loss: 0.9721540449767985
+eval metric: 0.06938319653272629
+====================
+
+2024-03-17 22:44:57,104 Brain Segmentation INFO: 
+====================
+Epoch: 8
+train loss: 0.9693714880174206
+eval metric: 0.0673045739531517
+====================
+
+2024-03-17 22:45:26,832 Brain Segmentation INFO: 
+====================
+Epoch: 9
+train loss: 0.9685948004004776
+eval metric: 0.06533358991146088
+====================
+
+2024-03-17 22:45:57,912 Brain Segmentation INFO: model was saved, epoch 10 is the best.
+2024-03-17 22:45:57,913 Brain Segmentation INFO: 
+====================
+Epoch: 10
+train loss: 0.9686374228487733
+eval metric: 0.07163801789283752
+====================
+
+2024-03-17 22:46:27,948 Brain Segmentation INFO: 
+====================
+Epoch: 11
+train loss: 0.9688997717313869
+eval metric: 0.0716279149055481
+====================
+
+2024-03-17 22:46:58,550 Brain Segmentation INFO: model was saved, epoch 12 is the best.
+2024-03-17 22:46:58,551 Brain Segmentation INFO: 
+====================
+Epoch: 12
+train loss: 0.9708599839159238
+eval metric: 0.07254238426685333
+====================
+
+2024-03-17 22:47:29,514 Brain Segmentation INFO: model was saved, epoch 13 is the best.
+2024-03-17 22:47:29,515 Brain Segmentation INFO: 
+====================
+Epoch: 13
+train loss: 0.9658365525225158
+eval metric: 0.07373081147670746
+====================
+
+2024-03-17 22:48:03,235 Brain Segmentation INFO: 
+====================
+Epoch: 14
+train loss: 0.9670713877165189
+eval metric: 0.06983472406864166
+====================
+
+2024-03-17 22:48:37,007 Brain Segmentation INFO: 
+====================
+Epoch: 15
+train loss: 0.9663125629066139
+eval metric: 0.06893911212682724
+====================
+
+2024-03-17 22:49:11,612 Brain Segmentation INFO: 
+====================
+Epoch: 16
+train loss: 0.9678206584786856
+eval metric: 0.07356845587491989
+====================
+
+2024-03-17 22:49:47,362 Brain Segmentation INFO: 
+====================
+Epoch: 17
+train loss: 0.9675538257886005
+eval metric: 0.0670560672879219
+====================
+
+2024-03-17 22:50:22,095 Brain Segmentation INFO: 
+====================
+Epoch: 18
+train loss: 0.9661997255458626
+eval metric: 0.06539071351289749
+====================
+
+2024-03-17 22:50:55,639 Brain Segmentation INFO: 
+====================
+Epoch: 19
+train loss: 0.967763094491856
+eval metric: 0.06530775874853134
+====================
+
+2024-03-17 22:51:30,322 Brain Segmentation INFO: 
+====================
+Epoch: 20
+train loss: 0.9683327604365605
+eval metric: 0.06755772233009338
+====================
+
+2024-03-17 22:52:05,577 Brain Segmentation INFO: 
+====================
+Epoch: 21
+train loss: 0.9667938037585186
+eval metric: 0.06996957212686539
+====================
+
+2024-03-17 22:52:40,836 Brain Segmentation INFO: 
+====================
+Epoch: 22
+train loss: 0.9740011243410008
+eval metric: 0.07352624833583832
+====================
+
+2024-03-17 22:53:21,235 Brain Segmentation INFO: 
+====================
+Epoch: 23
+train loss: 0.9690599428710117
+eval metric: 0.07259674370288849
+====================
+
+2024-03-17 22:53:59,998 Brain Segmentation INFO: 
+====================
+Epoch: 24
+train loss: 0.9678685242129911
+eval metric: 0.06762058287858963
+====================
+
+2024-03-17 22:54:40,608 Brain Segmentation INFO: 
+====================
+Epoch: 25
+train loss: 0.9656049045183326
+eval metric: 0.06647630035877228
+====================
+
+2024-03-17 22:55:22,646 Brain Segmentation INFO: 
+====================
+Epoch: 26
+train loss: 0.9658768811533528
+eval metric: 0.06921926885843277
+====================
+
+2024-03-17 22:56:01,835 Brain Segmentation INFO: 
+====================
+Epoch: 27
+train loss: 0.9708849422393306
+eval metric: 0.06882607936859131
+====================
+
+2024-03-17 22:56:41,187 Brain Segmentation INFO: 
+====================
+Epoch: 28
+train loss: 0.9649648288244842
+eval metric: 0.07144980132579803
+====================
+
+2024-03-17 22:57:21,076 Brain Segmentation INFO: 
+====================
+Epoch: 29
+train loss: 0.9654422511336624
+eval metric: 0.06400126218795776
+====================
+
+2024-03-17 22:58:01,100 Brain Segmentation INFO: 
+====================
+Epoch: 30
+train loss: 0.9668756396539749
+eval metric: 0.0676787868142128
+====================
+
+2024-03-17 22:58:40,176 Brain Segmentation INFO: 
+====================
+Epoch: 31
+train loss: 0.9657789782811237
+eval metric: 0.06751726567745209
+====================
+
+2024-03-17 22:59:20,166 Brain Segmentation INFO: 
+====================
+Epoch: 32
+train loss: 0.9678874707991078
+eval metric: 0.06871487200260162
+====================
+
+2024-03-17 23:00:00,048 Brain Segmentation INFO: 
+====================
+Epoch: 33
+train loss: 0.9681066819416579
+eval metric: 0.06214253976941109
+====================
+
+2024-03-17 23:00:39,997 Brain Segmentation INFO: 
+====================
+Epoch: 34
+train loss: 0.9676028707975982
+eval metric: 0.06873341649770737
+====================
+
+2024-03-17 23:01:19,410 Brain Segmentation INFO: 
+====================
+Epoch: 35
+train loss: 0.9659815949778403
+eval metric: 0.06386327743530273
+====================
+
+2024-03-17 23:01:58,179 Brain Segmentation INFO: 
+====================
+Epoch: 36
+train loss: 0.9672805500286882
+eval metric: 0.06787750869989395
+====================
+
+2024-03-17 23:02:39,854 Brain Segmentation INFO: 
+====================
+Epoch: 37
+train loss: 0.9620348253557759
+eval metric: 0.06734108924865723
+====================
+
+2024-03-17 23:03:20,195 Brain Segmentation INFO: 
+====================
+Epoch: 38
+train loss: 0.9667182782644866
+eval metric: 0.0697706863284111
+====================
+
+2024-03-17 23:03:59,201 Brain Segmentation INFO: 
+====================
+Epoch: 39
+train loss: 0.9685297954467035
+eval metric: 0.06662140786647797
+====================
+
+2024-03-17 23:04:38,635 Brain Segmentation INFO: 
+====================
+Epoch: 40
+train loss: 0.9697782224224459
+eval metric: 0.06575898081064224
+====================
+
+2024-03-17 23:05:18,585 Brain Segmentation INFO: model was saved, epoch 41 is the best.
+2024-03-17 23:05:18,585 Brain Segmentation INFO: 
+====================
+Epoch: 41
+train loss: 0.9635769667163971
+eval metric: 0.07761089503765106
+====================
+
+2024-03-17 23:05:58,637 Brain Segmentation INFO: model was saved, epoch 42 is the best.
+2024-03-17 23:05:58,637 Brain Segmentation INFO: 
+====================
+Epoch: 42
+train loss: 0.9676729838053385
+eval metric: 0.08069521188735962
+====================
+
+2024-03-17 23:06:38,594 Brain Segmentation INFO: 
+====================
+Epoch: 43
+train loss: 0.967232705444418
+eval metric: 0.07385867834091187
+====================
+
+2024-03-17 23:07:19,036 Brain Segmentation INFO: 
+====================
+Epoch: 44
+train loss: 0.9642384898278021
+eval metric: 0.07614122331142426
+====================
+
+2024-03-17 23:07:57,564 Brain Segmentation INFO: model was saved, epoch 45 is the best.
+2024-03-17 23:07:57,564 Brain Segmentation INFO: 
+====================
+Epoch: 45
+train loss: 0.9621021145133561
+eval metric: 0.08739946782588959
+====================
+
+2024-03-17 23:08:36,665 Brain Segmentation INFO: 
+====================
+Epoch: 46
+train loss: 0.9651139352911262
+eval metric: 0.07420763373374939
+====================
+
+2024-03-17 23:09:16,265 Brain Segmentation INFO: 
+====================
+Epoch: 47
+train loss: 0.963260692293926
+eval metric: 0.0689951628446579
+====================
+
+2024-03-17 23:09:55,950 Brain Segmentation INFO: 
+====================
+Epoch: 48
+train loss: 0.9704203246742167
+eval metric: 0.06955288350582123
+====================
+
+2024-03-17 23:10:36,872 Brain Segmentation INFO: 
+====================
+Epoch: 49
+train loss: 0.9670393428494853
+eval metric: 0.07365383207798004
+====================
+
+2024-03-17 23:11:16,833 Brain Segmentation INFO: 
+====================
+Epoch: 50
+train loss: 0.9664313126635807
+eval metric: 0.068978451192379
+====================
+
+2024-03-17 23:11:55,316 Brain Segmentation INFO: 
+====================
+Epoch: 51
+train loss: 0.9661078100563377
+eval metric: 0.06682194024324417
+====================
+
+2024-03-17 23:12:35,016 Brain Segmentation INFO: 
+====================
+Epoch: 52
+train loss: 0.9608434778387829
+eval metric: 0.07307804375886917
+====================
+
+2024-03-17 23:13:13,791 Brain Segmentation INFO: 
+====================
+Epoch: 53
+train loss: 0.9635461402195756
+eval metric: 0.07732097059488297
+====================
+
+2024-03-17 23:13:52,494 Brain Segmentation INFO: 
+====================
+Epoch: 54
+train loss: 0.9622435781263536
+eval metric: 0.06976741552352905
+====================
+
+2024-03-17 23:14:31,970 Brain Segmentation INFO: 
+====================
+Epoch: 55
+train loss: 0.9645400720257913
+eval metric: 0.07920277118682861
+====================
+
+2024-03-17 23:15:11,029 Brain Segmentation INFO: 
+====================
+Epoch: 56
+train loss: 0.9662333701246528
+eval metric: 0.07643108069896698
+====================
+
+2024-03-17 23:15:49,858 Brain Segmentation INFO: 
+====================
+Epoch: 57
+train loss: 0.9664128557328255
+eval metric: 0.07803747802972794
+====================
+
+2024-03-17 23:16:30,920 Brain Segmentation INFO: 
+====================
+Epoch: 58
+train loss: 0.9656948613864119
+eval metric: 0.08055546134710312
+====================
+
+2024-03-17 23:17:09,799 Brain Segmentation INFO: 
+====================
+Epoch: 59
+train loss: 0.9639844875181874
+eval metric: 0.08138108998537064
+====================
+
+2024-03-17 23:17:48,744 Brain Segmentation INFO: 
+====================
+Epoch: 60
+train loss: 0.9645205005522697
+eval metric: 0.07558131963014603
+====================
+
+2024-03-17 23:18:29,254 Brain Segmentation INFO: 
+====================
+Epoch: 61
+train loss: 0.9655543899023404
+eval metric: 0.07231365144252777
+====================
+
+2024-03-17 23:19:08,999 Brain Segmentation INFO: 
+====================
+Epoch: 62
+train loss: 0.9643514271705381
+eval metric: 0.06655968725681305
+====================
+
+2024-03-17 23:19:48,563 Brain Segmentation INFO: 
+====================
+Epoch: 63
+train loss: 0.9668413830059831
+eval metric: 0.07179738581180573
+====================
+
+2024-03-17 23:20:29,252 Brain Segmentation INFO: 
+====================
+Epoch: 64
+train loss: 0.9642031192779541
+eval metric: 0.07201085239648819
+====================
+
+2024-03-17 23:21:08,714 Brain Segmentation INFO: 
+====================
+Epoch: 65
+train loss: 0.9650317968860749
+eval metric: 0.073942169547081
+====================
+
+2024-03-17 23:21:47,418 Brain Segmentation INFO: 
+====================
+Epoch: 66
+train loss: 0.9642889563755322
+eval metric: 0.07252528518438339
+====================
+
+2024-03-17 23:22:27,456 Brain Segmentation INFO: 
+====================
+Epoch: 67
+train loss: 0.9699319530558842
+eval metric: 0.07721437513828278
+====================
+
+2024-03-17 23:23:06,818 Brain Segmentation INFO: 
+====================
+Epoch: 68
+train loss: 0.9676238554780201
+eval metric: 0.0731121152639389
+====================
+
+2024-03-17 23:23:45,224 Brain Segmentation INFO: 
+====================
+Epoch: 69
+train loss: 0.9671428101037138
+eval metric: 0.07145021855831146
+====================
+
+2024-03-17 23:24:25,849 Brain Segmentation INFO: 
+====================
+Epoch: 70
+train loss: 0.9658855802269393
+eval metric: 0.0826454609632492
+====================
+
+2024-03-17 23:25:06,258 Brain Segmentation INFO: 
+====================
+Epoch: 71
+train loss: 0.965808162125208
+eval metric: 0.07720305025577545
+====================
+
+2024-03-17 23:25:44,906 Brain Segmentation INFO: 
+====================
+Epoch: 72
+train loss: 0.9630342888575728
+eval metric: 0.07958336174488068
+====================
+
+2024-03-17 23:26:26,441 Brain Segmentation INFO: 
+====================
+Epoch: 73
+train loss: 0.9665250182151794
+eval metric: 0.07552656531333923
+====================
+
+2024-03-17 23:27:05,931 Brain Segmentation INFO: 
+====================
+Epoch: 74
+train loss: 0.9639550588464224
+eval metric: 0.07655613124370575
+====================
+
+2024-03-17 23:27:44,709 Brain Segmentation INFO: 
+====================
+Epoch: 75
+train loss: 0.9663575163451574
+eval metric: 0.07781022787094116
+====================
+
+2024-03-17 23:28:24,852 Brain Segmentation INFO: 
+====================
+Epoch: 76
+train loss: 0.9657492150542557
+eval metric: 0.06718682497739792
+====================
+
+2024-03-17 23:29:03,470 Brain Segmentation INFO: 
+====================
+Epoch: 77
+train loss: 0.9649839055153632
+eval metric: 0.07148824632167816
+====================
+
+2024-03-17 23:29:42,471 Brain Segmentation INFO: 
+====================
+Epoch: 78
+train loss: 0.9664649905696991
+eval metric: 0.0714876800775528
+====================
+
+2024-03-17 23:30:23,052 Brain Segmentation INFO: 
+====================
+Epoch: 79
+train loss: 0.9665676855271862
+eval metric: 0.07223791629076004
+====================
+
+2024-03-17 23:31:01,474 Brain Segmentation INFO: 
+====================
+Epoch: 80
+train loss: 0.9648075437033048
+eval metric: 0.07114286720752716
+====================
+
+2024-03-17 23:31:40,483 Brain Segmentation INFO: 
+====================
+Epoch: 81
+train loss: 0.9651476836973621
+eval metric: 0.07533224672079086
+====================
+
+2024-03-17 23:32:20,406 Brain Segmentation INFO: 
+====================
+Epoch: 82
+train loss: 0.965759539476005
+eval metric: 0.06994970142841339
+====================
+
+2024-03-17 23:32:59,000 Brain Segmentation INFO: 
+====================
+Epoch: 83
+train loss: 0.9647315862358258
+eval metric: 0.07103824615478516
+====================
+
+2024-03-17 23:33:38,917 Brain Segmentation INFO: 
+====================
+Epoch: 84
+train loss: 0.9656069964490911
+eval metric: 0.07164490222930908
+====================
+
+2024-03-17 23:34:20,151 Brain Segmentation INFO: 
+====================
+Epoch: 85
+train loss: 0.9651806232749774
+eval metric: 0.07673559337854385
+====================
+
+2024-03-17 23:34:59,099 Brain Segmentation INFO: 
+====================
+Epoch: 86
+train loss: 0.9667675046510594
+eval metric: 0.07186876237392426
+====================
+
+2024-03-17 23:35:39,789 Brain Segmentation INFO: 
+====================
+Epoch: 87
+train loss: 0.9661003107665688
+eval metric: 0.07049442082643509
+====================
+
+2024-03-17 23:36:19,300 Brain Segmentation INFO: 
+====================
+Epoch: 88
+train loss: 0.9673539624419264
+eval metric: 0.06855250149965286
+====================
+
+2024-03-17 23:36:56,896 Brain Segmentation INFO: 
+====================
+Epoch: 89
+train loss: 0.9657379542627642
+eval metric: 0.0728287547826767
+====================
+
+2024-03-17 23:37:37,136 Brain Segmentation INFO: 
+====================
+Epoch: 90
+train loss: 0.9617538195784374
+eval metric: 0.06458424031734467
+====================
+
+2024-03-17 23:38:17,526 Brain Segmentation INFO: 
+====================
+Epoch: 91
+train loss: 0.9650265670591786
+eval metric: 0.07652392983436584
+====================
+
+2024-03-17 23:38:56,047 Brain Segmentation INFO: 
+====================
+Epoch: 92
+train loss: 0.962837323065727
+eval metric: 0.07986108213663101
+====================
+
+2024-03-17 23:39:37,496 Brain Segmentation INFO: 
+====================
+Epoch: 93
+train loss: 0.9628053237033146
+eval metric: 0.07514049112796783
+====================
+
+2024-03-17 23:40:20,091 Brain Segmentation INFO: 
+====================
+Epoch: 94
+train loss: 0.9629294180100963
+eval metric: 0.08376772701740265
+====================
+
+2024-03-17 23:40:58,230 Brain Segmentation INFO: 
+====================
+Epoch: 95
+train loss: 0.9689050412947132
+eval metric: 0.07957182824611664
+====================
+
+2024-03-17 23:41:38,870 Brain Segmentation INFO: 
+====================
+Epoch: 96
+train loss: 0.9634550175359172
+eval metric: 0.08541997522115707
+====================
+
+2024-03-17 23:42:19,436 Brain Segmentation INFO: 
+====================
+Epoch: 97
+train loss: 0.9647743625025595
+eval metric: 0.0808480829000473
+====================
+
+2024-03-17 23:42:57,213 Brain Segmentation INFO: 
+====================
+Epoch: 98
+train loss: 0.9632781955503649
+eval metric: 0.08240693062543869
+====================
+
+2024-03-17 23:43:36,886 Brain Segmentation INFO: 
+====================
+Epoch: 99
+train loss: 0.96391398227343
+eval metric: 0.07165169715881348
+====================
+
+2024-03-17 23:44:16,578 Brain Segmentation INFO: 
+====================
+Epoch: 100
+train loss: 0.9663244216672836
+eval metric: 0.06792251765727997
+====================
+
+2024-03-17 23:44:54,619 Brain Segmentation INFO: 
+====================
+Epoch: 101
+train loss: 0.9651256306197054
+eval metric: 0.08579365164041519
+====================
+
+2024-03-17 23:45:35,117 Brain Segmentation INFO: 
+====================
+Epoch: 102
+train loss: 0.965641015319414
+eval metric: 0.080190509557724
+====================
+
+2024-03-17 23:46:15,375 Brain Segmentation INFO: 
+====================
+Epoch: 103
+train loss: 0.9645939475746566
+eval metric: 0.08423853665590286
+====================
+
+2024-03-17 23:46:54,961 Brain Segmentation INFO: 
+====================
+Epoch: 104
+train loss: 0.9636582930882772
+eval metric: 0.08019773662090302
+====================
+
+2024-03-17 23:47:35,442 Brain Segmentation INFO: 
+====================
+Epoch: 105
+train loss: 0.9628039483101137
+eval metric: 0.07648440450429916
+====================
+
+2024-03-17 23:48:14,813 Brain Segmentation INFO: 
+====================
+Epoch: 106
+train loss: 0.9640081076211827
+eval metric: 0.06362298876047134
+====================
+
+2024-03-17 23:48:53,350 Brain Segmentation INFO: 
+====================
+Epoch: 107
+train loss: 0.9624156990358906
+eval metric: 0.07665468007326126
+====================
+
+2024-03-17 23:49:34,359 Brain Segmentation INFO: 
+====================
+Epoch: 108
+train loss: 0.9635889293045126
+eval metric: 0.07281853258609772
+====================
+
+2024-03-17 23:50:13,412 Brain Segmentation INFO: 
+====================
+Epoch: 109
+train loss: 0.9643442637176924
+eval metric: 0.07279419898986816
+====================
+
+2024-03-17 23:50:51,823 Brain Segmentation INFO: model was saved, epoch 110 is the best.
+2024-03-17 23:50:51,824 Brain Segmentation INFO: 
+====================
+Epoch: 110
+train loss: 0.9640326717848419
+eval metric: 0.08797113597393036
+====================
+
+2024-03-17 23:51:31,886 Brain Segmentation INFO: 
+====================
+Epoch: 111
+train loss: 0.9628753867200626
+eval metric: 0.08234702050685883
+====================
+
+2024-03-17 23:52:10,536 Brain Segmentation INFO: 
+====================
+Epoch: 112
+train loss: 0.9636868257676402
+eval metric: 0.0861252024769783
+====================
+
+2024-03-17 23:52:49,515 Brain Segmentation INFO: 
+====================
+Epoch: 113
+train loss: 0.9629284983040184
+eval metric: 0.0857895165681839
+====================
+
+2024-03-17 23:53:29,486 Brain Segmentation INFO: model was saved, epoch 114 is the best.
+2024-03-17 23:53:29,487 Brain Segmentation INFO: 
+====================
+Epoch: 114
+train loss: 0.9675917138335526
+eval metric: 0.09374886751174927
+====================
+
+2024-03-17 23:54:07,667 Brain Segmentation INFO: 
+====================
+Epoch: 115
+train loss: 0.9633396716528041
+eval metric: 0.09029196202754974
+====================
+
+2024-03-17 23:54:46,914 Brain Segmentation INFO: 
+====================
+Epoch: 116
+train loss: 0.9651752402705531
+eval metric: 0.0856691524386406
+====================
+
+2024-03-17 23:55:27,392 Brain Segmentation INFO: 
+====================
+Epoch: 117
+train loss: 0.960645588495398
+eval metric: 0.0837675929069519
+====================
+
+2024-03-17 23:56:06,328 Brain Segmentation INFO: 
+====================
+Epoch: 118
+train loss: 0.9618047693724273
+eval metric: 0.09043534845113754
+====================
+
+2024-03-17 23:56:45,220 Brain Segmentation INFO: 
+====================
+Epoch: 119
+train loss: 0.9639411568641663
+eval metric: 0.0802268385887146
+====================
+
+2024-03-17 23:57:26,452 Brain Segmentation INFO: 
+====================
+Epoch: 120
+train loss: 0.9650450566763519
+eval metric: 0.08639812469482422
+====================
+
+2024-03-17 23:58:04,533 Brain Segmentation INFO: 
+====================
+Epoch: 121
+train loss: 0.9620877459485043
+eval metric: 0.0809020921587944
+====================
+
+2024-03-17 23:58:43,335 Brain Segmentation INFO: 
+====================
+Epoch: 122
+train loss: 0.9650608006344047
+eval metric: 0.08098452538251877
+====================
+
+2024-03-17 23:59:23,493 Brain Segmentation INFO: 
+====================
+Epoch: 123
+train loss: 0.95910289531113
+eval metric: 0.07881014049053192
+====================
+
+2024-03-18 00:00:01,594 Brain Segmentation INFO: 
+====================
+Epoch: 124
+train loss: 0.9625459832529868
+eval metric: 0.08273513615131378
+====================
+
+2024-03-18 00:00:41,660 Brain Segmentation INFO: 
+====================
+Epoch: 125
+train loss: 0.959510330230959
+eval metric: 0.07985755056142807
+====================
+
+2024-03-18 00:01:21,601 Brain Segmentation INFO: 
+====================
+Epoch: 126
+train loss: 0.963983105715885
+eval metric: 0.07891858369112015
+====================
+
+2024-03-18 00:02:00,616 Brain Segmentation INFO: 
+====================
+Epoch: 127
+train loss: 0.9638162934651939
+eval metric: 0.08142537623643875
+====================
+
+2024-03-18 00:02:40,772 Brain Segmentation INFO: 
+====================
+Epoch: 128
+train loss: 0.9649830543866722
+eval metric: 0.07208867371082306
+====================
+
+2024-03-18 00:03:21,826 Brain Segmentation INFO: 
+====================
+Epoch: 129
+train loss: 0.9617381550932443
+eval metric: 0.08712754398584366
+====================
+
+2024-03-18 00:04:01,536 Brain Segmentation INFO: 
+====================
+Epoch: 130
+train loss: 0.9621385823013962
+eval metric: 0.08172143995761871
+====================
+
+2024-03-18 00:04:41,603 Brain Segmentation INFO: 
+====================
+Epoch: 131
+train loss: 0.9611685923350755
+eval metric: 0.0816946029663086
+====================
+
+2024-03-18 00:05:21,577 Brain Segmentation INFO: 
+====================
+Epoch: 132
+train loss: 0.9621565880313996
+eval metric: 0.072366863489151
+====================
+
+2024-03-18 00:06:01,153 Brain Segmentation INFO: 
+====================
+Epoch: 133
+train loss: 0.9626533094272819
+eval metric: 0.08064503222703934
+====================
+
+2024-03-18 00:06:41,240 Brain Segmentation INFO: 
+====================
+Epoch: 134
+train loss: 0.9613086529957351
+eval metric: 0.08642394840717316
+====================
+
+2024-03-18 00:07:21,126 Brain Segmentation INFO: 
+====================
+Epoch: 135
+train loss: 0.9622448637921323
+eval metric: 0.07420345395803452
+====================
+
+2024-03-18 00:07:59,416 Brain Segmentation INFO: 
+====================
+Epoch: 136
+train loss: 0.9653598243190397
+eval metric: 0.0828263908624649
+====================
+
+2024-03-18 00:08:39,757 Brain Segmentation INFO: 
+====================
+Epoch: 137
+train loss: 0.9631894500024857
+eval metric: 0.08527271449565887
+====================
+
+2024-03-18 00:09:17,805 Brain Segmentation INFO: 
+====================
+Epoch: 138
+train loss: 0.9603717064344754
+eval metric: 0.08190492540597916
+====================
+
+2024-03-18 00:09:55,837 Brain Segmentation INFO: 
+====================
+Epoch: 139
+train loss: 0.9619083019994921
+eval metric: 0.08705846220254898
+====================
+
+2024-03-18 00:10:36,335 Brain Segmentation INFO: model was saved, epoch 140 is the best.
+2024-03-18 00:10:36,337 Brain Segmentation INFO: 
+====================
+Epoch: 140
+train loss: 0.9609048065318856
+eval metric: 0.09439010918140411
+====================
+
+2024-03-18 00:11:16,137 Brain Segmentation INFO: model was saved, epoch 141 is the best.
+2024-03-18 00:11:16,139 Brain Segmentation INFO: 
+====================
+Epoch: 141
+train loss: 0.9635863387456505
+eval metric: 0.10004793107509613
+====================
+
+2024-03-18 00:11:55,615 Brain Segmentation INFO: 
+====================
+Epoch: 142
+train loss: 0.9624677044089123
+eval metric: 0.08877767622470856
+====================
+
+2024-03-18 00:12:35,096 Brain Segmentation INFO: 
+====================
+Epoch: 143
+train loss: 0.9630049435041284
+eval metric: 0.08446704596281052
+====================
+
+2024-03-18 00:13:13,235 Brain Segmentation INFO: 
+====================
+Epoch: 144
+train loss: 0.9639360013828483
+eval metric: 0.08077584207057953
+====================
+
+2024-03-18 00:13:51,767 Brain Segmentation INFO: 
+====================
+Epoch: 145
+train loss: 0.9629562125411085
+eval metric: 0.07762612402439117
+====================
+
+2024-03-18 00:14:30,595 Brain Segmentation INFO: 
+====================
+Epoch: 146
+train loss: 0.9633897145589193
+eval metric: 0.08768614381551743
+====================
+
+2024-03-18 00:15:08,626 Brain Segmentation INFO: 
+====================
+Epoch: 147
+train loss: 0.962926157059208
+eval metric: 0.08195817470550537
+====================
+
+2024-03-18 00:15:47,325 Brain Segmentation INFO: 
+====================
+Epoch: 148
+train loss: 0.9592752584847071
+eval metric: 0.07634831964969635
+====================
+
+2024-03-18 00:16:26,824 Brain Segmentation INFO: 
+====================
+Epoch: 149
+train loss: 0.9650340810898812
+eval metric: 0.08727268874645233
+====================
+
+2024-03-18 00:17:05,840 Brain Segmentation INFO: 
+====================
+Epoch: 150
+train loss: 0.9639080762863159
+eval metric: 0.08160249888896942
+====================
+
+2024-03-18 00:17:44,936 Brain Segmentation INFO: 
+====================
+Epoch: 151
+train loss: 0.962179974843097
+eval metric: 0.08838492631912231
+====================
+
+2024-03-18 00:18:23,804 Brain Segmentation INFO: 
+====================
+Epoch: 152
+train loss: 0.9634496806770243
+eval metric: 0.08190444111824036
+====================
+
+2024-03-18 00:19:03,643 Brain Segmentation INFO: 
+====================
+Epoch: 153
+train loss: 0.960519677208316
+eval metric: 0.08790983259677887
+====================
+
+2024-03-18 00:19:42,644 Brain Segmentation INFO: 
+====================
+Epoch: 154
+train loss: 0.9665506789761205
+eval metric: 0.08572784811258316
+====================
+
+2024-03-18 00:20:21,689 Brain Segmentation INFO: 
+====================
+Epoch: 155
+train loss: 0.9634784043476146
+eval metric: 0.08406643569469452
+====================
+
+2024-03-18 00:21:00,187 Brain Segmentation INFO: 
+====================
+Epoch: 156
+train loss: 0.9634692765051319
+eval metric: 0.0907827690243721
+====================
+
+2024-03-18 00:21:40,010 Brain Segmentation INFO: 
+====================
+Epoch: 157
+train loss: 0.9638502975945832
+eval metric: 0.07268868386745453
+====================
+
+2024-03-18 00:22:18,728 Brain Segmentation INFO: 
+====================
+Epoch: 158
+train loss: 0.9650620234909878
+eval metric: 0.07412451505661011
+====================
+
+2024-03-18 00:22:56,771 Brain Segmentation INFO: 
+====================
+Epoch: 159
+train loss: 0.9629606809667361
+eval metric: 0.08100210875272751
+====================
+
+2024-03-18 00:23:35,808 Brain Segmentation INFO: 
+====================
+Epoch: 160
+train loss: 0.9600508905226185
+eval metric: 0.08184550702571869
+====================
+
+2024-03-18 00:24:14,860 Brain Segmentation INFO: 
+====================
+Epoch: 161
+train loss: 0.9637012404780234
+eval metric: 0.08652426302433014
+====================
+
+2024-03-18 00:24:53,660 Brain Segmentation INFO: 
+====================
+Epoch: 162
+train loss: 0.965906673221178
+eval metric: 0.0953841432929039
+====================
+
+2024-03-18 00:25:32,925 Brain Segmentation INFO: 
+====================
+Epoch: 163
+train loss: 0.9617223842169649
+eval metric: 0.09307007491588593
+====================
+
+2024-03-18 00:26:12,402 Brain Segmentation INFO: 
+====================
+Epoch: 164
+train loss: 0.9628464560354909
+eval metric: 0.09747066348791122
+====================
+
+2024-03-18 00:26:52,326 Brain Segmentation INFO: model was saved, epoch 165 is the best.
+2024-03-18 00:26:52,327 Brain Segmentation INFO: 
+====================
+Epoch: 165
+train loss: 0.9673664903128019
+eval metric: 0.10172414779663086
+====================
+
+2024-03-18 00:27:30,719 Brain Segmentation INFO: 
+====================
+Epoch: 166
+train loss: 0.962493360042572
+eval metric: 0.09322188794612885
+====================
+
+2024-03-18 00:28:10,947 Brain Segmentation INFO: 
+====================
+Epoch: 167
+train loss: 0.9635589565000227
+eval metric: 0.07939144223928452
+====================
+
+2024-03-18 00:28:49,930 Brain Segmentation INFO: 
+====================
+Epoch: 168
+train loss: 0.9669033968320457
+eval metric: 0.0881132110953331
+====================
+
+2024-03-18 00:29:28,945 Brain Segmentation INFO: 
+====================
+Epoch: 169
+train loss: 0.9607785709442631
+eval metric: 0.09645736962556839
+====================
+
+2024-03-18 00:30:08,383 Brain Segmentation INFO: 
+====================
+Epoch: 170
+train loss: 0.9651602243864408
+eval metric: 0.09713800251483917
+====================
+
+2024-03-18 00:30:47,298 Brain Segmentation INFO: 
+====================
+Epoch: 171
+train loss: 0.9621982241189608
+eval metric: 0.0840216726064682
+====================
+
+2024-03-18 00:31:26,084 Brain Segmentation INFO: 
+====================
+Epoch: 172
+train loss: 0.9626942911455708
+eval metric: 0.08971178531646729
+====================
+
+2024-03-18 00:32:04,801 Brain Segmentation INFO: 
+====================
+Epoch: 173
+train loss: 0.9612483625770897
+eval metric: 0.09664595127105713
+====================
+
+2024-03-18 00:32:44,045 Brain Segmentation INFO: 
+====================
+Epoch: 174
+train loss: 0.9644520462200206
+eval metric: 0.08842484652996063
+====================
+
+2024-03-18 00:33:22,841 Brain Segmentation INFO: 
+====================
+Epoch: 175
+train loss: 0.9598575439504398
+eval metric: 0.09352950751781464
+====================
+
+2024-03-18 00:34:01,877 Brain Segmentation INFO: 
+====================
+Epoch: 176
+train loss: 0.9631789525349935
+eval metric: 0.09207574278116226
+====================
+
+2024-03-18 00:34:41,856 Brain Segmentation INFO: 
+====================
+Epoch: 177
+train loss: 0.9595146435563282
+eval metric: 0.08363417536020279
+====================
+
+2024-03-18 00:35:21,182 Brain Segmentation INFO: 
+====================
+Epoch: 178
+train loss: 0.9628912934692957
+eval metric: 0.07980827242136002
+====================
+
+2024-03-18 00:35:59,997 Brain Segmentation INFO: 
+====================
+Epoch: 179
+train loss: 0.9632907266257912
+eval metric: 0.0853056088089943
+====================
+
+2024-03-18 00:36:39,141 Brain Segmentation INFO: 
+====================
+Epoch: 180
+train loss: 0.962561438160558
+eval metric: 0.08354568481445312
+====================
+
+2024-03-18 00:37:17,757 Brain Segmentation INFO: 
+====================
+Epoch: 181
+train loss: 0.9640427712471255
+eval metric: 0.08759691566228867
+====================
+
+2024-03-18 00:37:56,860 Brain Segmentation INFO: 
+====================
+Epoch: 182
+train loss: 0.9603206752448954
+eval metric: 0.09101813286542892
+====================
+
+2024-03-18 00:38:35,036 Brain Segmentation INFO: 
+====================
+Epoch: 183
+train loss: 0.962455750152629
+eval metric: 0.07403010129928589
+====================
+
+2024-03-18 00:39:15,324 Brain Segmentation INFO: 
+====================
+Epoch: 184
+train loss: 0.9644459171961712
+eval metric: 0.09280627965927124
+====================
+
+2024-03-18 00:39:52,958 Brain Segmentation INFO: 
+====================
+Epoch: 185
+train loss: 0.9597890614181437
+eval metric: 0.08610161393880844
+====================
+
+2024-03-18 00:40:32,127 Brain Segmentation INFO: 
+====================
+Epoch: 186
+train loss: 0.9624733610819745
+eval metric: 0.09133465588092804
+====================
+
+2024-03-18 00:41:11,187 Brain Segmentation INFO: 
+====================
+Epoch: 187
+train loss: 0.9587374278294143
+eval metric: 0.09213584661483765
+====================
+
+2024-03-18 00:41:49,909 Brain Segmentation INFO: 
+====================
+Epoch: 188
+train loss: 0.9631759421799773
+eval metric: 0.06885092705488205
+====================
+
+2024-03-18 00:42:28,668 Brain Segmentation INFO: 
+====================
+Epoch: 189
+train loss: 0.966760180970674
+eval metric: 0.08838065713644028
+====================
+
+2024-03-18 00:43:07,817 Brain Segmentation INFO: 
+====================
+Epoch: 190
+train loss: 0.9599339840232685
+eval metric: 0.09686000645160675
+====================
+
+2024-03-18 00:43:47,865 Brain Segmentation INFO: 
+====================
+Epoch: 191
+train loss: 0.9618911704709453
+eval metric: 0.0894513726234436
+====================
+
+2024-03-18 00:44:27,402 Brain Segmentation INFO: 
+====================
+Epoch: 192
+train loss: 0.9599003073989704
+eval metric: 0.09187160432338715
+====================
+
+2024-03-18 00:45:06,877 Brain Segmentation INFO: 
+====================
+Epoch: 193
+train loss: 0.9619833423245338
+eval metric: 0.08876235783100128
+====================
+
+2024-03-18 00:45:45,284 Brain Segmentation INFO: model was saved, epoch 194 is the best.
+2024-03-18 00:45:45,285 Brain Segmentation INFO: 
+====================
+Epoch: 194
+train loss: 0.9605359012080777
+eval metric: 0.10546755790710449
+====================
+
+2024-03-18 00:46:24,490 Brain Segmentation INFO: 
+====================
+Epoch: 195
+train loss: 0.9626215504061791
+eval metric: 0.09704766422510147
+====================
+
+2024-03-18 00:47:03,417 Brain Segmentation INFO: 
+====================
+Epoch: 196
+train loss: 0.9617333309624785
+eval metric: 0.08239980787038803
+====================
+
+2024-03-18 00:47:42,035 Brain Segmentation INFO: 
+====================
+Epoch: 197
+train loss: 0.9632810995142947
+eval metric: 0.09132234007120132
+====================
+
+2024-03-18 00:48:20,970 Brain Segmentation INFO: 
+====================
+Epoch: 198
+train loss: 0.95922916102153
+eval metric: 0.08929713815450668
+====================
+
+2024-03-18 00:49:00,402 Brain Segmentation INFO: 
+====================
+Epoch: 199
+train loss: 0.9607475899880932
+eval metric: 0.09020373970270157
+====================
+
+2024-03-18 00:49:38,929 Brain Segmentation INFO: 
+====================
+Epoch: 200
+train loss: 0.9617895144288258
+eval metric: 0.08909987658262253
+====================
+
+2024-03-18 00:50:19,700 Brain Segmentation INFO: 
+====================
+Epoch: 201
+train loss: 0.9593992765231799
+eval metric: 0.08896002918481827
+====================
+
+2024-03-18 00:50:58,850 Brain Segmentation INFO: 
+====================
+Epoch: 202
+train loss: 0.9607647343348431
+eval metric: 0.09313176572322845
+====================
+
+2024-03-18 00:51:38,695 Brain Segmentation INFO: 
+====================
+Epoch: 203
+train loss: 0.959850985516784
+eval metric: 0.09712374955415726
+====================
+
+2024-03-18 00:52:17,815 Brain Segmentation INFO: 
+====================
+Epoch: 204
+train loss: 0.9573503617317446
+eval metric: 0.09210187196731567
+====================
+
+2024-03-18 00:52:56,176 Brain Segmentation INFO: 
+====================
+Epoch: 205
+train loss: 0.9597426242725824
+eval metric: 0.07966180145740509
+====================
+
+2024-03-18 00:53:35,863 Brain Segmentation INFO: 
+====================
+Epoch: 206
+train loss: 0.9626011790767792
+eval metric: 0.08688060939311981
+====================
+
+2024-03-18 00:54:15,270 Brain Segmentation INFO: 
+====================
+Epoch: 207
+train loss: 0.9613324769081608
+eval metric: 0.08908622711896896
+====================
+
+2024-03-18 00:54:52,959 Brain Segmentation INFO: 
+====================
+Epoch: 208
+train loss: 0.9610835281751489
+eval metric: 0.09274037182331085
+====================
+
+2024-03-18 00:55:32,995 Brain Segmentation INFO: 
+====================
+Epoch: 209
+train loss: 0.961618786217064
+eval metric: 0.09001106023788452
+====================
+
+2024-03-18 00:56:12,882 Brain Segmentation INFO: 
+====================
+Epoch: 210
+train loss: 0.9613348950621903
+eval metric: 0.09875524044036865
+====================
+
+2024-03-18 00:56:51,666 Brain Segmentation INFO: 
+====================
+Epoch: 211
+train loss: 0.9627634524017252
+eval metric: 0.09031499922275543
+====================
+
+2024-03-18 00:57:31,321 Brain Segmentation INFO: 
+====================
+Epoch: 212
+train loss: 0.9622714327227685
+eval metric: 0.09951739013195038
+====================
+
+2024-03-18 00:58:13,224 Brain Segmentation INFO: 
+====================
+Epoch: 213
+train loss: 0.9630372876762062
+eval metric: 0.0796898826956749
+====================
+
+2024-03-18 00:58:53,159 Brain Segmentation INFO: 
+====================
+Epoch: 214
+train loss: 0.9629045468504711
+eval metric: 0.09475640952587128
+====================
+
+2024-03-18 00:59:33,082 Brain Segmentation INFO: 
+====================
+Epoch: 215
+train loss: 0.9584537500976235
+eval metric: 0.09091324359178543
+====================
+
+2024-03-18 01:00:14,055 Brain Segmentation INFO: 
+====================
+Epoch: 216
+train loss: 0.9606992358802467
+eval metric: 0.08847185224294662
+====================
+
+2024-03-18 01:00:52,008 Brain Segmentation INFO: 
+====================
+Epoch: 217
+train loss: 0.9615431415137424
+eval metric: 0.10433103889226913
+====================
+
+2024-03-18 01:01:31,515 Brain Segmentation INFO: 
+====================
+Epoch: 218
+train loss: 0.960991322353322
+eval metric: 0.08745954930782318
+====================
+
+2024-03-18 01:02:11,534 Brain Segmentation INFO: 
+====================
+Epoch: 219
+train loss: 0.9593978396026037
+eval metric: 0.08261112868785858
+====================
+
+2024-03-18 01:02:49,410 Brain Segmentation INFO: 
+====================
+Epoch: 220
+train loss: 0.9641304894160199
+eval metric: 0.09124326705932617
+====================
+
+2024-03-18 01:03:28,892 Brain Segmentation INFO: 
+====================
+Epoch: 221
+train loss: 0.9634291318155104
+eval metric: 0.1052267998456955
+====================
+
+2024-03-18 01:04:09,543 Brain Segmentation INFO: 
+====================
+Epoch: 222
+train loss: 0.9625581374732397
+eval metric: 0.08216424286365509
+====================
+
+2024-03-18 01:04:47,938 Brain Segmentation INFO: 
+====================
+Epoch: 223
+train loss: 0.9592890124167165
+eval metric: 0.09007187187671661
+====================
+
+2024-03-18 01:05:28,902 Brain Segmentation INFO: 
+====================
+Epoch: 224
+train loss: 0.9579225451715531
+eval metric: 0.09386996924877167
+====================
+
+2024-03-18 01:06:09,021 Brain Segmentation INFO: 
+====================
+Epoch: 225
+train loss: 0.9609029818606633
+eval metric: 0.1012561172246933
+====================
+
+2024-03-18 01:06:47,492 Brain Segmentation INFO: 
+====================
+Epoch: 226
+train loss: 0.959783407308722
+eval metric: 0.0869801789522171
+====================
+
+2024-03-18 01:07:27,547 Brain Segmentation INFO: 
+====================
+Epoch: 227
+train loss: 0.9556853739164208
+eval metric: 0.0842195525765419
+====================
+
+2024-03-18 01:08:07,757 Brain Segmentation INFO: 
+====================
+Epoch: 228
+train loss: 0.962066355571952
+eval metric: 0.07149634510278702
+====================
+
+2024-03-18 01:08:45,809 Brain Segmentation INFO: 
+====================
+Epoch: 229
+train loss: 0.961014945660868
+eval metric: 0.09524090588092804
+====================
+
+2024-03-18 01:09:24,976 Brain Segmentation INFO: 
+====================
+Epoch: 230
+train loss: 0.9625619047431535
+eval metric: 0.09080074727535248
+====================
+
+2024-03-18 01:10:03,692 Brain Segmentation INFO: 
+====================
+Epoch: 231
+train loss: 0.9609937481982733
+eval metric: 0.0815269723534584
+====================
+
+2024-03-18 01:10:41,662 Brain Segmentation INFO: 
+====================
+Epoch: 232
+train loss: 0.9620303857711053
+eval metric: 0.07894295454025269
+====================
+
+2024-03-18 01:11:21,735 Brain Segmentation INFO: 
+====================
+Epoch: 233
+train loss: 0.9596983489169869
+eval metric: 0.07759155333042145
+====================
+
+2024-03-18 01:12:00,486 Brain Segmentation INFO: 
+====================
+Epoch: 234
+train loss: 0.9613559989519017
+eval metric: 0.08412716537714005
+====================
+
+2024-03-18 01:12:40,245 Brain Segmentation INFO: 
+====================
+Epoch: 235
+train loss: 0.9593759602116
+eval metric: 0.08477240800857544
+====================
+
+2024-03-18 01:13:19,528 Brain Segmentation INFO: 
+====================
+Epoch: 236
+train loss: 0.9563035593237929
+eval metric: 0.0907742977142334
+====================
+
+2024-03-18 01:13:57,036 Brain Segmentation INFO: 
+====================
+Epoch: 237
+train loss: 0.9563644534798079
+eval metric: 0.09461349248886108
+====================
+
+2024-03-18 01:14:39,282 Brain Segmentation INFO: 
+====================
+Epoch: 238
+train loss: 0.9595969787207983
+eval metric: 0.10270269215106964
+====================
+
+2024-03-18 01:15:19,377 Brain Segmentation INFO: 
+====================
+Epoch: 239
+train loss: 0.9582799301352553
+eval metric: 0.08557436615228653
+====================
+
+2024-03-18 01:15:57,377 Brain Segmentation INFO: 
+====================
+Epoch: 240
+train loss: 0.9633631456282831
+eval metric: 0.10069020092487335
+====================
+
+2024-03-18 01:16:35,719 Brain Segmentation INFO: 
+====================
+Epoch: 241
+train loss: 0.9602277580127921
+eval metric: 0.08662210404872894
+====================
+
+2024-03-18 01:17:17,389 Brain Segmentation INFO: 
+====================
+Epoch: 242
+train loss: 0.9592667350205042
+eval metric: 0.08062344789505005
+====================
+
+2024-03-18 01:17:56,845 Brain Segmentation INFO: 
+====================
+Epoch: 243
+train loss: 0.9632335375714046
+eval metric: 0.0943295806646347
+====================
+
+2024-03-18 01:18:36,493 Brain Segmentation INFO: 
+====================
+Epoch: 244
+train loss: 0.9580435554186503
+eval metric: 0.08881253004074097
+====================
+
+2024-03-18 01:19:16,848 Brain Segmentation INFO: 
+====================
+Epoch: 245
+train loss: 0.9641136373243024
+eval metric: 0.10107292979955673
+====================
+
+2024-03-18 01:19:54,505 Brain Segmentation INFO: 
+====================
+Epoch: 246
+train loss: 0.9602566419109222
+eval metric: 0.0926751121878624
+====================
+
+2024-03-18 01:20:33,167 Brain Segmentation INFO: 
+====================
+Epoch: 247
+train loss: 0.9571483667178821
+eval metric: 0.0967983603477478
+====================
+
+2024-03-18 01:21:12,419 Brain Segmentation INFO: 
+====================
+Epoch: 248
+train loss: 0.9589729930764885
+eval metric: 0.09198863804340363
+====================
+
+2024-03-18 01:21:51,063 Brain Segmentation INFO: 
+====================
+Epoch: 249
+train loss: 0.9566398884660454
+eval metric: 0.07977819442749023
+====================
+
+2024-03-18 01:22:31,137 Brain Segmentation INFO: 
+====================
+Epoch: 250
+train loss: 0.9577331228922772
+eval metric: 0.08880096673965454
+====================
+
+2024-03-18 01:23:11,193 Brain Segmentation INFO: 
+====================
+Epoch: 251
+train loss: 0.9592974403853057
+eval metric: 0.089193195104599
+====================
+
+2024-03-18 01:23:51,090 Brain Segmentation INFO: 
+====================
+Epoch: 252
+train loss: 0.9583077212815644
+eval metric: 0.09728606790304184
+====================
+
+2024-03-18 01:24:30,454 Brain Segmentation INFO: 
+====================
+Epoch: 253
+train loss: 0.9583742778788331
+eval metric: 0.08440476655960083
+====================
+
+2024-03-18 01:25:09,976 Brain Segmentation INFO: 
+====================
+Epoch: 254
+train loss: 0.9573596972291187
+eval metric: 0.07909500598907471
+====================
+
+2024-03-18 01:25:49,160 Brain Segmentation INFO: 
+====================
+Epoch: 255
+train loss: 0.957565180716976
+eval metric: 0.09071587026119232
+====================
+
+2024-03-18 01:26:28,922 Brain Segmentation INFO: 
+====================
+Epoch: 256
+train loss: 0.9609475879259007
+eval metric: 0.08555591851472855
+====================
+
+2024-03-18 01:27:07,878 Brain Segmentation INFO: 
+====================
+Epoch: 257
+train loss: 0.9601618743711903
+eval metric: 0.09214296191930771
+====================
+
+2024-03-18 01:27:45,158 Brain Segmentation INFO: 
+====================
+Epoch: 258
+train loss: 0.9624810757175568
+eval metric: 0.08314613252878189
+====================
+
+2024-03-18 01:28:26,420 Brain Segmentation INFO: 
+====================
+Epoch: 259
+train loss: 0.9580836187126816
+eval metric: 0.08791309595108032
+====================
+
+2024-03-18 01:29:04,546 Brain Segmentation INFO: 
+====================
+Epoch: 260
+train loss: 0.9584149436284137
+eval metric: 0.10092441737651825
+====================
+
+2024-03-18 01:29:43,684 Brain Segmentation INFO: 
+====================
+Epoch: 261
+train loss: 0.9603625298828207
+eval metric: 0.10447058826684952
+====================
+
+2024-03-18 01:30:25,129 Brain Segmentation INFO: 
+====================
+Epoch: 262
+train loss: 0.9594128926595052
+eval metric: 0.08728573471307755
+====================
+
+2024-03-18 01:31:03,752 Brain Segmentation INFO: 
+====================
+Epoch: 263
+train loss: 0.9601582493833316
+eval metric: 0.08897025883197784
+====================
+
+2024-03-18 01:31:42,994 Brain Segmentation INFO: 
+====================
+Epoch: 264
+train loss: 0.9586108038502354
+eval metric: 0.0879121869802475
+====================
+
+2024-03-18 01:32:22,794 Brain Segmentation INFO: 
+====================
+Epoch: 265
+train loss: 0.9582674618690245
+eval metric: 0.09198009967803955
+====================
+
+2024-03-18 01:33:01,414 Brain Segmentation INFO: 
+====================
+Epoch: 266
+train loss: 0.9584384541357717
+eval metric: 0.09266893565654755
+====================
+
+2024-03-18 01:33:39,863 Brain Segmentation INFO: 
+====================
+Epoch: 267
+train loss: 0.9573796109486652
+eval metric: 0.10052736103534698
+====================
+
+2024-03-18 01:34:19,576 Brain Segmentation INFO: 
+====================
+Epoch: 268
+train loss: 0.9577151357486684
+eval metric: 0.09263677895069122
+====================
+
+2024-03-18 01:34:58,145 Brain Segmentation INFO: 
+====================
+Epoch: 269
+train loss: 0.9607472528693497
+eval metric: 0.08889501541852951
+====================
+
+2024-03-18 01:35:37,460 Brain Segmentation INFO: 
+====================
+Epoch: 270
+train loss: 0.960554523493654
+eval metric: 0.0872480645775795
+====================
+
+2024-03-18 01:36:16,707 Brain Segmentation INFO: 
+====================
+Epoch: 271
+train loss: 0.9593892353837208
+eval metric: 0.08722490072250366
+====================
+
+2024-03-18 01:36:55,880 Brain Segmentation INFO: 
+====================
+Epoch: 272
+train loss: 0.9583949087768473
+eval metric: 0.08452476561069489
+====================
+
+2024-03-18 01:37:35,557 Brain Segmentation INFO: 
+====================
+Epoch: 273
+train loss: 0.9558504493005814
+eval metric: 0.08218635618686676
+====================
+
+2024-03-18 01:38:15,198 Brain Segmentation INFO: 
+====================
+Epoch: 274
+train loss: 0.9614854589585335
+eval metric: 0.09757976233959198
+====================
+
+2024-03-18 01:38:53,915 Brain Segmentation INFO: 
+====================
+Epoch: 275
+train loss: 0.9554974917442568
+eval metric: 0.08949508517980576
+====================
+
+2024-03-18 01:39:33,824 Brain Segmentation INFO: 
+====================
+Epoch: 276
+train loss: 0.9594243643104389
+eval metric: 0.08384613692760468
+====================
+
+2024-03-18 01:40:12,924 Brain Segmentation INFO: 
+====================
+Epoch: 277
+train loss: 0.9574398468899471
+eval metric: 0.09286333620548248
+====================
+
+2024-03-18 01:40:53,042 Brain Segmentation INFO: model was saved, epoch 278 is the best.
+2024-03-18 01:40:53,043 Brain Segmentation INFO: 
+====================
+Epoch: 278
+train loss: 0.9575328102675817
+eval metric: 0.10777665674686432
+====================
+
+2024-03-18 01:41:32,331 Brain Segmentation INFO: 
+====================
+Epoch: 279
+train loss: 0.9584935333139153
+eval metric: 0.09655649960041046
+====================
+
+2024-03-18 01:42:10,820 Brain Segmentation INFO: 
+====================
+Epoch: 280
+train loss: 0.960227966949504
+eval metric: 0.08517733961343765
+====================
+
+2024-03-18 01:42:50,076 Brain Segmentation INFO: 
+====================
+Epoch: 281
+train loss: 0.9593716500907816
+eval metric: 0.0873531848192215
+====================
+
+2024-03-18 01:43:29,005 Brain Segmentation INFO: 
+====================
+Epoch: 282
+train loss: 0.9560128123529495
+eval metric: 0.083807073533535
+====================
+
+2024-03-18 01:44:07,560 Brain Segmentation INFO: 
+====================
+Epoch: 283
+train loss: 0.9559956436516136
+eval metric: 0.0947527140378952
+====================
+
+2024-03-18 01:44:46,528 Brain Segmentation INFO: 
+====================
+Epoch: 284
+train loss: 0.9568410394012287
+eval metric: 0.10021030902862549
+====================
+
+2024-03-18 01:45:26,970 Brain Segmentation INFO: 
+====================
+Epoch: 285
+train loss: 0.9549336952547873
+eval metric: 0.09631553292274475
+====================
+
+2024-03-18 01:46:06,795 Brain Segmentation INFO: 
+====================
+Epoch: 286
+train loss: 0.960986977623355
+eval metric: 0.08484215289354324
+====================
+
+2024-03-18 01:46:45,684 Brain Segmentation INFO: 
+====================
+Epoch: 287
+train loss: 0.962744039873923
+eval metric: 0.10179011523723602
+====================
+
+2024-03-18 01:47:25,961 Brain Segmentation INFO: 
+====================
+Epoch: 288
+train loss: 0.9552949756704351
+eval metric: 0.09611644595861435
+====================
+
+2024-03-18 01:48:05,612 Brain Segmentation INFO: 
+====================
+Epoch: 289
+train loss: 0.9599398810376403
+eval metric: 0.10028383880853653
+====================
+
+2024-03-18 01:48:45,552 Brain Segmentation INFO: 
+====================
+Epoch: 290
+train loss: 0.9574400391629947
+eval metric: 0.10472691059112549
+====================
+
+2024-03-18 01:49:25,163 Brain Segmentation INFO: 
+====================
+Epoch: 291
+train loss: 0.9578053034761901
+eval metric: 0.0964510440826416
+====================
+
+2024-03-18 01:50:04,380 Brain Segmentation INFO: 
+====================
+Epoch: 292
+train loss: 0.9559531410535177
+eval metric: 0.09108839184045792
+====================
+
+2024-03-18 01:50:44,093 Brain Segmentation INFO: 
+====================
+Epoch: 293
+train loss: 0.9587395210419932
+eval metric: 0.09648524969816208
+====================
+
+2024-03-18 01:51:22,698 Brain Segmentation INFO: 
+====================
+Epoch: 294
+train loss: 0.9546673535018839
+eval metric: 0.10004837810993195
+====================
+
+2024-03-18 01:52:02,837 Brain Segmentation INFO: 
+====================
+Epoch: 295
+train loss: 0.9566441562867933
+eval metric: 0.09542900323867798
+====================
+
+2024-03-18 01:52:43,068 Brain Segmentation INFO: 
+====================
+Epoch: 296
+train loss: 0.9608483647787442
+eval metric: 0.09363237768411636
+====================
+
+2024-03-18 01:53:23,418 Brain Segmentation INFO: 
+====================
+Epoch: 297
+train loss: 0.9528552588596139
+eval metric: 0.09581191837787628
+====================
+
+2024-03-18 01:54:04,165 Brain Segmentation INFO: 
+====================
+Epoch: 298
+train loss: 0.9600827187620183
+eval metric: 0.08703091740608215
+====================
+
+2024-03-18 01:54:43,764 Brain Segmentation INFO: 
+====================
+Epoch: 299
+train loss: 0.9554852093419721
+eval metric: 0.08519726991653442
+====================
+

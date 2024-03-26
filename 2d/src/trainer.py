@@ -1,6 +1,8 @@
 import os
 import pickle
 from tqdm import tqdm
+import numpy as np
+import matplotlib.pyplot as plt
 
 import torch
 import torch.nn as nn
@@ -46,21 +48,25 @@ class Trainer():
     def run(self):
         for epoch in tqdm(range(self.args.epochs)):
             self.train_one_epoch()
-            self.eval_one_epoch()
+            self.eval_one_epoch(epoch)
             self.save_checkpoint(epoch)
             self.print_logs(epoch)
         
-        with open(f'{self.output_dir}/loss_logs.pkl', 'wb') as f:
+        with open(f'{self.args.output_dir}/loss_logs.pkl', 'wb') as f:
             pickle.dump(self.loss_logs, f)
-        with open(f'{self.output_dir}/metric_logs.pkl', 'wb') as f:
+        with open(f'{self.args.output_dir}/metric_logs.pkl', 'wb') as f:
             pickle.dump(self.metric_logs, f)  
         
     def train_one_epoch(self):
         self.model.train()
         train_loss = 0
         for batch in self.train_loader:
-
-            x, label = batch[0].to(self.args.device), batch[1].to(self.args.device)
+            
+            if len(batch) == 2:
+                x, label = batch[0].to(self.args.device), batch[1].to(self.args.device)
+            elif len(batch) == 3:
+                x1, x2, label = batch[0].to(self.args.device), batch[1].to(self.args.device), batch[2].to(self.args.device)
+                x = torch.cat([x1,x2], dim=1)
             
             self.optimizer.zero_grad()
             out = self.model(x)
@@ -75,15 +81,21 @@ class Trainer():
 
         return
     
-    def eval_one_epoch(self):
+    def eval_one_epoch(self, epoch):
         self.model.eval()
 
         with torch.no_grad():
             for batch in self.valid_loader:
-                x, label = batch[0].to(self.args.device), batch[1].to(self.args.device)
+                if len(batch) == 2:
+                    x, label = batch[0].to(self.args.device), batch[1].to(self.args.device)
+                elif len(batch) == 3:
+                    x1, x2, label = batch[0].to(self.args.device), batch[1].to(self.args.device), batch[2].to(self.args.device)
+                    x = torch.cat([x1,x2], dim=1)
                 out = sliding_window_inference(inputs=x, roi_size=self.args.roi, sw_batch_size=self.args.sw_batch, predictor=self.model)
                 out = [self.post_pred(i) for i in decollate_batch(out)]
                 self.dice_metric(y_pred=out, y=label)
+
+                self.save_img(x, label, out, epoch)
 
             self.metric_logs['eval'].append(self.dice_metric.aggregate().item())
             self.dice_metric.reset()
@@ -97,6 +109,26 @@ class Trainer():
             self.best_epoch = epoch
             torch.save(self.model.state_dict(), os.path.join(self.args.output_dir, "best_model.pth"))
             logger.info(f'model was saved, epoch {epoch} is the best.')
+    
+    def save_img(self, img, mask, pred, epoch):
+        if mask.max() == 1. and img.size(1) == 1:
+            img, mask = img.cpu().numpy() * 255, mask.cpu().numpy() * 255
+            pred = np.array(pred[0].cpu()) * 255
+            fig, axes = plt.subplots(1, 3, tight_layout=True)
+            axes[0].imshow(img[0,0].astype(np.uint8), cmap="gray", origin="lower")
+            axes[1].imshow(mask[0,0].astype(np.uint8), cmap="gray", origin="lower")
+            axes[2].imshow(pred[0].astype(np.uint8), cmap="gray", origin="lower")
+            plt.savefig(f"{self.args.fig_dir}/{self.args.model_name}/{self.args.input}/{epoch}.png")
+        if mask.max() == 1. and img.size(1) == 2:
+            img, mask = img.cpu().numpy() * 255, mask.cpu().numpy() * 255
+            pred = np.array(pred[0].cpu()) * 255
+            fig, axes = plt.subplots(1, 4, tight_layout=True)
+            axes[0].imshow(img[0,0].astype(np.uint8), cmap="gray", origin="lower")
+            axes[1].imshow(img[0,1].astype(np.uint8), cmap="gray", origin="lower")
+            axes[2].imshow(mask[0,0].astype(np.uint8), cmap="gray", origin="lower")
+            axes[3].imshow(pred[0].astype(np.uint8), cmap="gray", origin="lower")
+            plt.savefig(f"{self.args.fig_dir}/{self.args.model_name}/{self.args.input}/{epoch}.png")
+        plt.close()
 
     def print_logs(self, epoch):
         logger.info(

@@ -1,16 +1,17 @@
-2024-03-12 22:22:09,217 Brain Segmentation INFO: Namespace(background=True
+2024-03-20 18:29:43,779 Brain Segmentation INFO: Namespace(background=True
  device='cuda'
  epochs=300
  eval_batch_size=1
- image_dir='/mnt/strokeapp/Datasets/Seg_ctmri'
+ fig_dir='fig'
+ image_dir='/mnt/strokeapp/Datasets/Seg_ctmri_2d'
  input='real_mri'
  lr=0.001
- mask_dir='/mnt/strokeapp/Datasets/Seg_mask'
+ mask_dir='/mnt/strokeapp/Datasets/Seg_mask_2d'
  model_name='segresnet'
  name='segresnet_real_mri'
  output_dir='output/segresnet_real_mri'
- roi=(96
- 96)
+ roi=(128
+ 128)
  seed=123
  spatial_size=(96
  96
@@ -20,7 +21,7 @@
  test_batch_size=4
  train_batch_size=16
  weight_decay=0.0001)
-2024-03-12 22:22:09,318 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+2024-03-20 18:29:43,852 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
 SegResNet(
   (act_mod): ReLU(inplace=True)
   (convInit): Convolution(
@@ -222,7 +223,7 @@ SegResNet(
 )
 ----------------------------------------------------------------------------------------------------
 
-2024-03-12 22:22:09,320 Brain Segmentation INFO: SegResNet(
+2024-03-20 18:29:43,853 Brain Segmentation INFO: SegResNet(
   (act_mod): ReLU(inplace=True)
   (convInit): Convolution(
     (conv): Conv2d(1, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
@@ -421,154 +422,91 @@ SegResNet(
     )
   )
 )
-2024-03-12 22:22:09,327 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
-2024-03-12 22:23:14,660 Brain Segmentation INFO: model was saved, epoch 0 is the best.
-2024-03-12 22:23:14,662 Brain Segmentation INFO: 
+2024-03-20 18:29:43,855 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+2024-03-20 18:29:57,572 Brain Segmentation INFO: model was saved, epoch 0 is the best.
+2024-03-20 18:29:57,572 Brain Segmentation INFO: 
 ====================
 Epoch: 0
-train loss: 0.9802097056501655
-eval metric: 0.05466967076063156
+train loss: 0.9630233837025506
+eval metric: 0.07519623637199402
 ====================
 
-2024-03-12 22:24:14,883 Brain Segmentation INFO: model was saved, epoch 1 is the best.
-2024-03-12 22:24:14,884 Brain Segmentation INFO: 
+2024-03-20 18:30:08,460 Brain Segmentation INFO: 
 ====================
 Epoch: 1
-train loss: 0.9674021694608914
-eval metric: 0.09937232732772827
+train loss: 0.9583199173212051
+eval metric: 0.05875428393483162
 ====================
 
-2024-03-12 22:25:13,792 Brain Segmentation INFO: model was saved, epoch 2 is the best.
-2024-03-12 22:25:13,793 Brain Segmentation INFO: 
+2024-03-20 18:30:19,178 Brain Segmentation INFO: 
 ====================
 Epoch: 2
-train loss: 0.9491372537869279
-eval metric: 0.11903295665979385
+train loss: 0.9448120466300419
+eval metric: 0.06757120788097382
 ====================
 
-2024-03-12 22:26:14,147 Brain Segmentation INFO: model was saved, epoch 3 is the best.
-2024-03-12 22:26:14,149 Brain Segmentation INFO: 
+2024-03-20 18:30:29,819 Brain Segmentation INFO: 
 ====================
 Epoch: 3
-train loss: 0.9315827516137912
-eval metric: 0.12969869375228882
+train loss: 0.9396438279322216
+eval metric: 0.06742328405380249
 ====================
 
-2024-03-12 22:27:13,953 Brain Segmentation INFO: model was saved, epoch 4 is the best.
-2024-03-12 22:27:13,955 Brain Segmentation INFO: 
+2024-03-20 18:30:40,574 Brain Segmentation INFO: model was saved, epoch 4 is the best.
+2024-03-20 18:30:40,574 Brain Segmentation INFO: 
 ====================
 Epoch: 4
-train loss: 0.917259550062559
-eval metric: 0.1556970328092575
+train loss: 0.9387717353446143
+eval metric: 0.08438706398010254
 ====================
 
-2024-03-12 22:28:13,330 Brain Segmentation INFO: model was saved, epoch 5 is the best.
-2024-03-12 22:28:13,331 Brain Segmentation INFO: 
+2024-03-20 18:30:51,183 Brain Segmentation INFO: 
 ====================
 Epoch: 5
-train loss: 0.9095093052714102
-eval metric: 0.17203190922737122
+train loss: 0.9346757935626167
+eval metric: 0.07217330485582352
 ====================
 
-2024-03-12 22:29:12,893 Brain Segmentation INFO: 
+2024-03-20 18:31:01,755 Brain Segmentation INFO: 
 ====================
 Epoch: 6
-train loss: 0.9066394867115123
-eval metric: 0.1593324840068817
+train loss: 0.936273700424603
+eval metric: 0.08394584059715271
 ====================
 
-2024-03-12 22:30:12,952 Brain Segmentation INFO: model was saved, epoch 7 is the best.
-2024-03-12 22:30:12,953 Brain Segmentation INFO: 
+2024-03-20 18:31:12,633 Brain Segmentation INFO: 
 ====================
 Epoch: 7
-train loss: 0.9021103891634172
-eval metric: 0.17315882444381714
+train loss: 0.9337056917803628
+eval metric: 0.08382954448461533
 ====================
 
-2024-03-12 22:31:16,483 Brain Segmentation INFO: 
+2024-03-20 18:31:23,323 Brain Segmentation INFO: 
 ====================
 Epoch: 8
-train loss: 0.900384343038964
-eval metric: 0.1592268943786621
+train loss: 0.9213732608727047
+eval metric: 0.08046934753656387
 ====================
 
-2024-03-12 22:32:17,338 Brain Segmentation INFO: 
+2024-03-20 18:31:34,526 Brain Segmentation INFO: 
 ====================
 Epoch: 9
-train loss: 0.9049458252967045
-eval metric: 0.15948644280433655
+train loss: 0.932623775941985
+eval metric: 0.08184298872947693
 ====================
 
-2024-03-12 22:33:21,936 Brain Segmentation INFO: model was saved, epoch 10 is the best.
-2024-03-12 22:33:21,937 Brain Segmentation INFO: 
+2024-03-20 18:31:45,168 Brain Segmentation INFO: model was saved, epoch 10 is the best.
+2024-03-20 18:31:45,168 Brain Segmentation INFO: 
 ====================
 Epoch: 10
-train loss: 0.900592315261082
-eval metric: 0.1759769171476364
+train loss: 0.9328788646629879
+eval metric: 0.0947304293513298
 ====================
 
-2024-03-12 22:34:26,223 Brain Segmentation INFO: 
+2024-03-20 18:31:55,726 Brain Segmentation INFO: 
 ====================
 Epoch: 11
-train loss: 0.8995818426852585
-eval metric: 0.1363983303308487
-====================
-
-2024-03-12 22:35:30,086 Brain Segmentation INFO: 
-====================
-Epoch: 12
-train loss: 0.8959033325795205
-eval metric: 0.1625804603099823
-====================
-
-2024-03-12 22:36:35,474 Brain Segmentation INFO: model was saved, epoch 13 is the best.
-2024-03-12 22:36:35,475 Brain Segmentation INFO: 
-====================
-Epoch: 13
-train loss: 0.8937942752594589
-eval metric: 0.21524691581726074
-====================
-
-2024-03-12 22:37:39,351 Brain Segmentation INFO: 
-====================
-Epoch: 14
-train loss: 0.8916194664054019
-eval metric: 0.19333255290985107
-====================
-
-2024-03-12 22:38:43,875 Brain Segmentation INFO: 
-====================
-Epoch: 15
-train loss: 0.8913867037783387
-eval metric: 0.1938711404800415
-====================
-
-2024-03-12 22:39:49,280 Brain Segmentation INFO: 
-====================
-Epoch: 16
-train loss: 0.8941973284367593
-eval metric: 0.20486053824424744
-====================
-
-2024-03-12 22:40:54,160 Brain Segmentation INFO: 
-====================
-Epoch: 17
-train loss: 0.8894137923595726
-eval metric: 0.19831302762031555
-====================
-
-2024-03-12 22:41:59,988 Brain Segmentation INFO: 
-====================
-Epoch: 18
-train loss: 0.8898660526961408
-eval metric: 0.21151646971702576
-====================
-
-2024-03-12 22:43:04,802 Brain Segmentation INFO: model was saved, epoch 19 is the best.
-2024-03-12 22:43:04,803 Brain Segmentation INFO: 
-====================
-Epoch: 19
-train loss: 0.8875923506835456
-eval metric: 0.2194063663482666
+train loss: 0.9209046512842178
+eval metric: 0.09112104773521423
 ====================
 

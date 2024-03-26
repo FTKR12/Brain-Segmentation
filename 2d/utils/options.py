@@ -7,6 +7,7 @@ def get_args():
     parser.add_argument('--seed', default=123, type=int)
     parser.add_argument('--device', default='cuda')
     parser.add_argument('--output_dir', default='output')
+    parser.add_argument('--fig_dir', default='fig')
     parser.add_argument('--image_dir', default='dir/to/dataset/dir')
     parser.add_argument('--mask_dir', default='dir/to/mask/dir')
     parser.add_argument('--synthesize_model', default='resvit')
@@ -28,7 +29,7 @@ def get_args():
     ########## eval options ##########
     parser.add_argument('--eval_batch_size', default=4, type=int)
     parser.add_argument('--test_batch_size', default=4, type=int)
-    parser.add_argument('--roi', default=(96, 96), type=tuple)
+    parser.add_argument('--roi', default=(128, 128), type=tuple)
     parser.add_argument('--sw_batch', default=4, type=int)
     parser.add_argument('--background', action='store_false')
 

@@ -1,0 +1,2985 @@
+2024-03-18 02:52:24,629 Brain Segmentation INFO: Namespace(background=True
+ device='cuda'
+ epochs=300
+ eval_batch_size=1
+ fig_dir='fig'
+ image_dir='/mnt/strokeapp/Datasets/Seg_ctmri_2d'
+ input='fake_mri'
+ lr=0.001
+ mask_dir='/mnt/strokeapp/Datasets/Seg_mask_2d'
+ model_name='flexible_unet'
+ name='flexible_unet_resvit_res_ls'
+ output_dir='output/flexible_unet_resvit_res_ls'
+ roi=(128
+ 128)
+ seed=123
+ spatial_size=(96
+ 96
+ 96)
+ sw_batch=4
+ synthesize_model='resvit_res_ls'
+ test_batch_size=4
+ train_batch_size=16
+ weight_decay=0.0001)
+2024-03-18 02:52:24,996 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+FlexibleUNet(
+  (encoder): EfficientNetEncoder(
+    (_conv_stem): Conv2d(1, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
+    (_conv_stem_padding): ConstantPad2d(padding=(0, 1, 0, 1), value=0.0)
+    (_bn0): BatchNorm2d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+    (_blocks): Sequential(
+      (0): Sequential(
+        (0): MBConvBlock(
+          (_expand_conv): Identity()
+          (_expand_conv_padding): Identity()
+          (_bn0): Identity()
+          (_depthwise_conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), groups=32, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(32, 8, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(8, 32, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(32, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (1): Sequential(
+        (1): MBConvBlock(
+          (_expand_conv): Conv2d(16, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(2, 2), groups=96, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(0, 1, 0, 1), value=0.0)
+          (_bn1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(96, 4, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(4, 96, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(96, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (2): MBConvBlock(
+          (_expand_conv): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), groups=144, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(144, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (2): Sequential(
+        (3): MBConvBlock(
+          (_expand_conv): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(144, 144, kernel_size=(5, 5), stride=(2, 2), groups=144, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 2, 1, 2), value=0.0)
+          (_bn1): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(144, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (4): MBConvBlock(
+          (_expand_conv): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(240, 240, kernel_size=(5, 5), stride=(1, 1), groups=240, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(240, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (3): Sequential(
+        (5): MBConvBlock(
+          (_expand_conv): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(240, 240, kernel_size=(3, 3), stride=(2, 2), groups=240, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(0, 1, 0, 1), value=0.0)
+          (_bn1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(240, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(80, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (6): MBConvBlock(
+          (_expand_conv): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(480, 480, kernel_size=(3, 3), stride=(1, 1), groups=480, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(80, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (7): MBConvBlock(
+          (_expand_conv): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(480, 480, kernel_size=(3, 3), stride=(1, 1), groups=480, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(80, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (4): Sequential(
+        (8): MBConvBlock(
+          (_expand_conv): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(480, 480, kernel_size=(5, 5), stride=(1, 1), groups=480, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(480, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (9): MBConvBlock(
+          (_expand_conv): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(672, 672, kernel_size=(5, 5), stride=(1, 1), groups=672, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (10): MBConvBlock(
+          (_expand_conv): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(672, 672, kernel_size=(5, 5), stride=(1, 1), groups=672, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (5): Sequential(
+        (11): MBConvBlock(
+          (_expand_conv): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(672, 672, kernel_size=(5, 5), stride=(2, 2), groups=672, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 2, 1, 2), value=0.0)
+          (_bn1): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(672, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (12): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(5, 5), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (13): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(5, 5), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (14): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(5, 5), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (6): Sequential(
+        (15): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(3, 3), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(320, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+    )
+    (_conv_head): Conv2d(320, 1280, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (_conv_head_padding): Identity()
+    (_bn1): BatchNorm2d(1280, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+    (_avg_pooling): AdaptiveAvgPool2d(output_size=1)
+    (_dropout): Dropout(p=0.2, inplace=False)
+    (_fc): Linear(in_features=1280, out_features=1000, bias=True)
+    (_swish): MemoryEfficientSwish()
+  )
+  (decoder): UNetDecoder(
+    (blocks): ModuleList(
+      (0): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(432, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (1): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(296, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (2): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(152, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (3): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(80, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (4): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(32, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(16, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(16, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+    )
+  )
+  (segmentation_head): SegmentationHead(
+    (0): Conv2d(16, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): Identity()
+    (2): Identity()
+  )
+)
+----------------------------------------------------------------------------------------------------
+
+2024-03-18 02:52:25,022 Brain Segmentation INFO: FlexibleUNet(
+  (encoder): EfficientNetEncoder(
+    (_conv_stem): Conv2d(1, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
+    (_conv_stem_padding): ConstantPad2d(padding=(0, 1, 0, 1), value=0.0)
+    (_bn0): BatchNorm2d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+    (_blocks): Sequential(
+      (0): Sequential(
+        (0): MBConvBlock(
+          (_expand_conv): Identity()
+          (_expand_conv_padding): Identity()
+          (_bn0): Identity()
+          (_depthwise_conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), groups=32, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(32, 8, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(8, 32, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(32, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (1): Sequential(
+        (1): MBConvBlock(
+          (_expand_conv): Conv2d(16, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(2, 2), groups=96, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(0, 1, 0, 1), value=0.0)
+          (_bn1): BatchNorm2d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(96, 4, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(4, 96, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(96, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (2): MBConvBlock(
+          (_expand_conv): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), groups=144, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(144, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (2): Sequential(
+        (3): MBConvBlock(
+          (_expand_conv): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(144, 144, kernel_size=(5, 5), stride=(2, 2), groups=144, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 2, 1, 2), value=0.0)
+          (_bn1): BatchNorm2d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(144, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (4): MBConvBlock(
+          (_expand_conv): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(240, 240, kernel_size=(5, 5), stride=(1, 1), groups=240, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(240, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(40, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (3): Sequential(
+        (5): MBConvBlock(
+          (_expand_conv): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(240, 240, kernel_size=(3, 3), stride=(2, 2), groups=240, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(0, 1, 0, 1), value=0.0)
+          (_bn1): BatchNorm2d(240, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(240, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(80, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (6): MBConvBlock(
+          (_expand_conv): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(480, 480, kernel_size=(3, 3), stride=(1, 1), groups=480, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(80, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (7): MBConvBlock(
+          (_expand_conv): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(480, 480, kernel_size=(3, 3), stride=(1, 1), groups=480, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(80, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (4): Sequential(
+        (8): MBConvBlock(
+          (_expand_conv): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(480, 480, kernel_size=(5, 5), stride=(1, 1), groups=480, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(480, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(480, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (9): MBConvBlock(
+          (_expand_conv): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(672, 672, kernel_size=(5, 5), stride=(1, 1), groups=672, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (10): MBConvBlock(
+          (_expand_conv): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(672, 672, kernel_size=(5, 5), stride=(1, 1), groups=672, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (5): Sequential(
+        (11): MBConvBlock(
+          (_expand_conv): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(672, 672, kernel_size=(5, 5), stride=(2, 2), groups=672, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 2, 1, 2), value=0.0)
+          (_bn1): BatchNorm2d(672, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(672, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (12): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(5, 5), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (13): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(5, 5), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+        (14): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(5, 5), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(2, 2, 2, 2), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+      (6): Sequential(
+        (15): MBConvBlock(
+          (_expand_conv): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_expand_conv_padding): Identity()
+          (_bn0): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_depthwise_conv): Conv2d(1152, 1152, kernel_size=(3, 3), stride=(1, 1), groups=1152, bias=False)
+          (_depthwise_conv_padding): ConstantPad2d(padding=(1, 1, 1, 1), value=0.0)
+          (_bn1): BatchNorm2d(1152, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_se_adaptpool): AdaptiveAvgPool2d(output_size=1)
+          (_se_reduce): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+          (_se_reduce_padding): Identity()
+          (_se_expand): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+          (_se_expand_padding): Identity()
+          (_project_conv): Conv2d(1152, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (_project_conv_padding): Identity()
+          (_bn2): BatchNorm2d(320, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (_swish): MemoryEfficientSwish()
+        )
+      )
+    )
+    (_conv_head): Conv2d(320, 1280, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (_conv_head_padding): Identity()
+    (_bn1): BatchNorm2d(1280, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+    (_avg_pooling): AdaptiveAvgPool2d(output_size=1)
+    (_dropout): Dropout(p=0.2, inplace=False)
+    (_fc): Linear(in_features=1280, out_features=1000, bias=True)
+    (_swish): MemoryEfficientSwish()
+  )
+  (decoder): UNetDecoder(
+    (blocks): ModuleList(
+      (0): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(432, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (1): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(296, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (2): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(152, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (3): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(80, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+      (4): UpCat(
+        (upsample): UpSample(
+          (upsample_non_trainable): Upsample(scale_factor=(2.0, 2.0), mode=nearest)
+        )
+        (convs): TwoConv(
+          (conv_0): Convolution(
+            (conv): Conv2d(32, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(16, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+          (conv_1): Convolution(
+            (conv): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (adn): ADN(
+              (N): BatchNorm2d(16, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+              (D): Dropout(p=0.0, inplace=False)
+              (A): ReLU(inplace=True)
+            )
+          )
+        )
+      )
+    )
+  )
+  (segmentation_head): SegmentationHead(
+    (0): Conv2d(16, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): Identity()
+    (2): Identity()
+  )
+)
+2024-03-18 02:52:25,055 Brain Segmentation INFO: ----------------------------------------------------------------------------------------------------
+2024-03-18 02:53:28,159 Brain Segmentation INFO: model was saved, epoch 0 is the best.
+2024-03-18 02:53:28,159 Brain Segmentation INFO: 
+====================
+Epoch: 0
+train loss: 0.976107007072818
+eval metric: 0.017059143632650375
+====================
+
+2024-03-18 02:54:26,301 Brain Segmentation INFO: 
+====================
+Epoch: 1
+train loss: 0.972379365274983
+eval metric: 0.017059143632650375
+====================
+
+2024-03-18 02:55:23,989 Brain Segmentation INFO: 
+====================
+Epoch: 2
+train loss: 0.969435138728029
+eval metric: 0.0
+====================
+
+2024-03-18 02:56:21,822 Brain Segmentation INFO: 
+====================
+Epoch: 3
+train loss: 0.970042126153105
+eval metric: 0.01616778038442135
+====================
+
+2024-03-18 02:57:20,089 Brain Segmentation INFO: model was saved, epoch 4 is the best.
+2024-03-18 02:57:20,090 Brain Segmentation INFO: 
+====================
+Epoch: 4
+train loss: 0.9696293120743126
+eval metric: 0.017136869952082634
+====================
+
+2024-03-18 02:58:17,807 Brain Segmentation INFO: model was saved, epoch 5 is the best.
+2024-03-18 02:58:17,807 Brain Segmentation INFO: 
+====================
+Epoch: 5
+train loss: 0.9644737653834845
+eval metric: 0.017314651980996132
+====================
+
+2024-03-18 02:59:15,590 Brain Segmentation INFO: 
+====================
+Epoch: 6
+train loss: 0.967213015402517
+eval metric: 0.01116546057164669
+====================
+
+2024-03-18 03:00:12,666 Brain Segmentation INFO: 
+====================
+Epoch: 7
+train loss: 0.9667848810072868
+eval metric: 0.011637197807431221
+====================
+
+2024-03-18 03:01:11,124 Brain Segmentation INFO: model was saved, epoch 8 is the best.
+2024-03-18 03:01:11,125 Brain Segmentation INFO: 
+====================
+Epoch: 8
+train loss: 0.9682936373577323
+eval metric: 0.088129922747612
+====================
+
+2024-03-18 03:02:07,971 Brain Segmentation INFO: 
+====================
+Epoch: 9
+train loss: 0.9674709670005306
+eval metric: 0.06418140232563019
+====================
+
+2024-03-18 03:03:04,399 Brain Segmentation INFO: 
+====================
+Epoch: 10
+train loss: 0.9629473865673106
+eval metric: 0.07098362594842911
+====================
+
+2024-03-18 03:04:00,848 Brain Segmentation INFO: model was saved, epoch 11 is the best.
+2024-03-18 03:04:00,848 Brain Segmentation INFO: 
+====================
+Epoch: 11
+train loss: 0.9651530231198957
+eval metric: 0.09833166748285294
+====================
+
+2024-03-18 03:04:59,103 Brain Segmentation INFO: 
+====================
+Epoch: 12
+train loss: 0.963561705363694
+eval metric: 0.07683830708265305
+====================
+
+2024-03-18 03:05:56,197 Brain Segmentation INFO: 
+====================
+Epoch: 13
+train loss: 0.9684044218832447
+eval metric: 0.07836253941059113
+====================
+
+2024-03-18 03:06:54,620 Brain Segmentation INFO: 
+====================
+Epoch: 14
+train loss: 0.9637945736608198
+eval metric: 0.09373076260089874
+====================
+
+2024-03-18 03:07:52,543 Brain Segmentation INFO: 
+====================
+Epoch: 15
+train loss: 0.9649730087608419
+eval metric: 0.0865878090262413
+====================
+
+2024-03-18 03:08:50,655 Brain Segmentation INFO: 
+====================
+Epoch: 16
+train loss: 0.9667558317543358
+eval metric: 0.07239364087581635
+====================
+
+2024-03-18 03:09:48,582 Brain Segmentation INFO: 
+====================
+Epoch: 17
+train loss: 0.9648873107407683
+eval metric: 0.0695037990808487
+====================
+
+2024-03-18 03:10:47,367 Brain Segmentation INFO: 
+====================
+Epoch: 18
+train loss: 0.9662380699188479
+eval metric: 0.0888097733259201
+====================
+
+2024-03-18 03:11:45,847 Brain Segmentation INFO: 
+====================
+Epoch: 19
+train loss: 0.9638978371056177
+eval metric: 0.09102340042591095
+====================
+
+2024-03-18 03:12:43,599 Brain Segmentation INFO: 
+====================
+Epoch: 20
+train loss: 0.9628158205298967
+eval metric: 0.08875200152397156
+====================
+
+2024-03-18 03:13:42,386 Brain Segmentation INFO: 
+====================
+Epoch: 21
+train loss: 0.959958246959153
+eval metric: 0.07306749373674393
+====================
+
+2024-03-18 03:14:41,417 Brain Segmentation INFO: 
+====================
+Epoch: 22
+train loss: 0.9649307048448952
+eval metric: 0.0728692039847374
+====================
+
+2024-03-18 03:15:39,696 Brain Segmentation INFO: model was saved, epoch 23 is the best.
+2024-03-18 03:15:39,697 Brain Segmentation INFO: 
+====================
+Epoch: 23
+train loss: 0.9649522650626398
+eval metric: 0.10736139118671417
+====================
+
+2024-03-18 03:16:36,918 Brain Segmentation INFO: 
+====================
+Epoch: 24
+train loss: 0.9642734674997228
+eval metric: 0.07988275587558746
+====================
+
+2024-03-18 03:17:33,005 Brain Segmentation INFO: 
+====================
+Epoch: 25
+train loss: 0.9632489796607725
+eval metric: 0.081651471555233
+====================
+
+2024-03-18 03:18:30,168 Brain Segmentation INFO: 
+====================
+Epoch: 26
+train loss: 0.9639205035342965
+eval metric: 0.07297724485397339
+====================
+
+2024-03-18 03:19:27,575 Brain Segmentation INFO: 
+====================
+Epoch: 27
+train loss: 0.9679456596733421
+eval metric: 0.0727759450674057
+====================
+
+2024-03-18 03:20:24,908 Brain Segmentation INFO: 
+====================
+Epoch: 28
+train loss: 0.9525239281756903
+eval metric: 0.08894284814596176
+====================
+
+2024-03-18 03:21:21,933 Brain Segmentation INFO: 
+====================
+Epoch: 29
+train loss: 0.9057489575878266
+eval metric: 0.09264381229877472
+====================
+
+2024-03-18 03:22:20,332 Brain Segmentation INFO: 
+====================
+Epoch: 30
+train loss: 0.6042824748863456
+eval metric: 0.0
+====================
+
+2024-03-18 03:23:16,859 Brain Segmentation INFO: 
+====================
+Epoch: 31
+train loss: 0.1923348664115834
+eval metric: 0.0
+====================
+
+2024-03-18 03:24:14,639 Brain Segmentation INFO: 
+====================
+Epoch: 32
+train loss: 0.19160356240407114
+eval metric: 0.0
+====================
+
+2024-03-18 03:25:11,417 Brain Segmentation INFO: 
+====================
+Epoch: 33
+train loss: 0.19090365257955366
+eval metric: 0.0
+====================
+
+2024-03-18 03:26:07,843 Brain Segmentation INFO: 
+====================
+Epoch: 34
+train loss: 0.17543026524525818
+eval metric: 0.0
+====================
+
+2024-03-18 03:27:04,545 Brain Segmentation INFO: 
+====================
+Epoch: 35
+train loss: 0.18752122638366556
+eval metric: 0.0
+====================
+
+2024-03-18 03:28:00,972 Brain Segmentation INFO: 
+====================
+Epoch: 36
+train loss: 0.18953319671013022
+eval metric: 0.0
+====================
+
+2024-03-18 03:28:59,717 Brain Segmentation INFO: 
+====================
+Epoch: 37
+train loss: 0.18012507279874176
+eval metric: 0.0
+====================
+
+2024-03-18 03:29:55,614 Brain Segmentation INFO: 
+====================
+Epoch: 38
+train loss: 0.18011974194838154
+eval metric: 0.0
+====================
+
+2024-03-18 03:30:44,809 Brain Segmentation INFO: 
+====================
+Epoch: 39
+train loss: 0.18415002148318035
+eval metric: 0.0
+====================
+
+2024-03-18 03:31:35,445 Brain Segmentation INFO: 
+====================
+Epoch: 40
+train loss: 0.18213325538622435
+eval metric: 0.0
+====================
+
+2024-03-18 03:32:24,864 Brain Segmentation INFO: 
+====================
+Epoch: 41
+train loss: 0.1881797546020118
+eval metric: 0.0
+====================
+
+2024-03-18 03:33:14,865 Brain Segmentation INFO: 
+====================
+Epoch: 42
+train loss: 0.175409648607495
+eval metric: 0.0
+====================
+
+2024-03-18 03:34:00,874 Brain Segmentation INFO: 
+====================
+Epoch: 43
+train loss: 0.19221140151863458
+eval metric: 0.0
+====================
+
+2024-03-18 03:34:43,753 Brain Segmentation INFO: 
+====================
+Epoch: 44
+train loss: 0.18549014115205376
+eval metric: 0.0
+====================
+
+2024-03-18 03:35:26,020 Brain Segmentation INFO: 
+====================
+Epoch: 45
+train loss: 0.18481677001522434
+eval metric: 0.0
+====================
+
+2024-03-18 03:36:08,496 Brain Segmentation INFO: 
+====================
+Epoch: 46
+train loss: 0.18616033754041117
+eval metric: 0.0
+====================
+
+2024-03-18 03:36:49,501 Brain Segmentation INFO: 
+====================
+Epoch: 47
+train loss: 0.18414494807841958
+eval metric: 0.0
+====================
+
+2024-03-18 03:37:31,649 Brain Segmentation INFO: 
+====================
+Epoch: 48
+train loss: 0.18548810830520046
+eval metric: 0.0
+====================
+
+2024-03-18 03:38:13,594 Brain Segmentation INFO: 
+====================
+Epoch: 49
+train loss: 0.1841435618698597
+eval metric: 0.0
+====================
+
+2024-03-18 03:38:55,811 Brain Segmentation INFO: 
+====================
+Epoch: 50
+train loss: 0.18279974955704906
+eval metric: 0.0
+====================
+
+2024-03-18 03:39:37,611 Brain Segmentation INFO: 
+====================
+Epoch: 51
+train loss: 0.1868309821252541
+eval metric: 0.0
+====================
+
+2024-03-18 03:40:20,561 Brain Segmentation INFO: 
+====================
+Epoch: 52
+train loss: 0.18817461069713357
+eval metric: 0.0
+====================
+
+2024-03-18 03:41:05,272 Brain Segmentation INFO: 
+====================
+Epoch: 53
+train loss: 0.1895184427179316
+eval metric: 0.0
+====================
+
+2024-03-18 03:41:47,960 Brain Segmentation INFO: 
+====================
+Epoch: 54
+train loss: 0.18817473443285113
+eval metric: 0.0
+====================
+
+2024-03-18 03:42:29,892 Brain Segmentation INFO: 
+====================
+Epoch: 55
+train loss: 0.1821259540175238
+eval metric: 0.0
+====================
+
+2024-03-18 03:43:12,582 Brain Segmentation INFO: 
+====================
+Epoch: 56
+train loss: 0.19355080092466007
+eval metric: 0.0
+====================
+
+2024-03-18 03:43:54,432 Brain Segmentation INFO: 
+====================
+Epoch: 57
+train loss: 0.1854857616527106
+eval metric: 0.0
+====================
+
+2024-03-18 03:44:36,803 Brain Segmentation INFO: 
+====================
+Epoch: 58
+train loss: 0.18481365058531043
+eval metric: 0.0
+====================
+
+2024-03-18 03:45:18,839 Brain Segmentation INFO: 
+====================
+Epoch: 59
+train loss: 0.19019015790313804
+eval metric: 0.0
+====================
+
+2024-03-18 03:46:02,125 Brain Segmentation INFO: 
+====================
+Epoch: 60
+train loss: 0.18279755447981177
+eval metric: 0.0
+====================
+
+2024-03-18 03:46:44,619 Brain Segmentation INFO: 
+====================
+Epoch: 61
+train loss: 0.18212523243279868
+eval metric: 0.0
+====================
+
+2024-03-18 03:47:26,673 Brain Segmentation INFO: 
+====================
+Epoch: 62
+train loss: 0.18951781767029915
+eval metric: 0.0
+====================
+
+2024-03-18 03:48:08,126 Brain Segmentation INFO: 
+====================
+Epoch: 63
+train loss: 0.1935498957592313
+eval metric: 0.0
+====================
+
+2024-03-18 03:48:50,164 Brain Segmentation INFO: 
+====================
+Epoch: 64
+train loss: 0.18615720212780018
+eval metric: 0.0
+====================
+
+2024-03-18 03:49:32,338 Brain Segmentation INFO: 
+====================
+Epoch: 65
+train loss: 0.19354960638829458
+eval metric: 0.0
+====================
+
+2024-03-18 03:50:15,056 Brain Segmentation INFO: 
+====================
+Epoch: 66
+train loss: 0.18682909740876125
+eval metric: 0.0
+====================
+
+2024-03-18 03:50:57,221 Brain Segmentation INFO: 
+====================
+Epoch: 67
+train loss: 0.18750132203743022
+eval metric: 0.0
+====================
+
+2024-03-18 03:51:39,268 Brain Segmentation INFO: 
+====================
+Epoch: 68
+train loss: 0.18884519531681973
+eval metric: 0.0
+====================
+
+2024-03-18 03:52:21,252 Brain Segmentation INFO: 
+====================
+Epoch: 69
+train loss: 0.184140676652552
+eval metric: 0.0
+====================
+
+2024-03-18 03:53:03,074 Brain Segmentation INFO: 
+====================
+Epoch: 70
+train loss: 0.18346860716419836
+eval metric: 0.0
+====================
+
+2024-03-18 03:53:45,147 Brain Segmentation INFO: 
+====================
+Epoch: 71
+train loss: 0.1861568419362909
+eval metric: 0.0
+====================
+
+2024-03-18 03:54:27,665 Brain Segmentation INFO: 
+====================
+Epoch: 72
+train loss: 0.19086099279824123
+eval metric: 0.0
+====================
+
+2024-03-18 03:55:09,874 Brain Segmentation INFO: 
+====================
+Epoch: 73
+train loss: 0.19018886690979364
+eval metric: 0.0
+====================
+
+2024-03-18 03:55:52,324 Brain Segmentation INFO: 
+====================
+Epoch: 74
+train loss: 0.1888448703353123
+eval metric: 0.0
+====================
+
+2024-03-18 03:56:35,325 Brain Segmentation INFO: 
+====================
+Epoch: 75
+train loss: 0.18682858131585584
+eval metric: 0.0
+====================
+
+2024-03-18 03:57:18,527 Brain Segmentation INFO: 
+====================
+Epoch: 76
+train loss: 0.18145230404471838
+eval metric: 0.0
+====================
+
+2024-03-18 03:58:00,596 Brain Segmentation INFO: 
+====================
+Epoch: 77
+train loss: 0.1814521761831417
+eval metric: 0.0
+====================
+
+2024-03-18 03:58:42,847 Brain Segmentation INFO: 
+====================
+Epoch: 78
+train loss: 0.18750059772883693
+eval metric: 0.0
+====================
+
+2024-03-18 03:59:24,945 Brain Segmentation INFO: 
+====================
+Epoch: 79
+train loss: 0.18548450502817349
+eval metric: 0.0
+====================
+
+2024-03-18 04:00:07,620 Brain Segmentation INFO: 
+====================
+Epoch: 80
+train loss: 0.1807801922162374
+eval metric: 0.0
+====================
+
+2024-03-18 04:00:49,964 Brain Segmentation INFO: 
+====================
+Epoch: 81
+train loss: 0.188172708836294
+eval metric: 0.0
+====================
+
+2024-03-18 04:01:32,270 Brain Segmentation INFO: 
+====================
+Epoch: 82
+train loss: 0.17741979181926737
+eval metric: 0.0
+====================
+
+2024-03-18 04:02:14,400 Brain Segmentation INFO: 
+====================
+Epoch: 83
+train loss: 0.18548432889805044
+eval metric: 0.0
+====================
+
+2024-03-18 04:02:56,617 Brain Segmentation INFO: 
+====================
+Epoch: 84
+train loss: 0.1895165374522568
+eval metric: 0.0
+====================
+
+2024-03-18 04:03:37,918 Brain Segmentation INFO: 
+====================
+Epoch: 85
+train loss: 0.19354895658550725
+eval metric: 0.0
+====================
+
+2024-03-18 04:04:19,906 Brain Segmentation INFO: 
+====================
+Epoch: 86
+train loss: 0.1901885575905282
+eval metric: 0.0
+====================
+
+2024-03-18 04:05:00,874 Brain Segmentation INFO: 
+====================
+Epoch: 87
+train loss: 0.1801078892363015
+eval metric: 0.0
+====================
+
+2024-03-18 04:05:43,688 Brain Segmentation INFO: 
+====================
+Epoch: 88
+train loss: 0.19086052305115167
+eval metric: 0.0
+====================
+
+2024-03-18 04:06:25,207 Brain Segmentation INFO: 
+====================
+Epoch: 89
+train loss: 0.18548418913957893
+eval metric: 0.0
+====================
+
+2024-03-18 04:07:06,957 Brain Segmentation INFO: 
+====================
+Epoch: 90
+train loss: 0.18884439990725568
+eval metric: 0.0
+====================
+
+2024-03-18 04:07:49,008 Brain Segmentation INFO: 
+====================
+Epoch: 91
+train loss: 0.18145197133223215
+eval metric: 0.0
+====================
+
+2024-03-18 04:08:31,611 Brain Segmentation INFO: 
+====================
+Epoch: 92
+train loss: 0.18145198859674957
+eval metric: 0.0
+====================
+
+2024-03-18 04:09:14,437 Brain Segmentation INFO: 
+====================
+Epoch: 93
+train loss: 0.18884433221112015
+eval metric: 0.0
+====================
+
+2024-03-18 04:09:55,977 Brain Segmentation INFO: 
+====================
+Epoch: 94
+train loss: 0.18414003878671636
+eval metric: 0.0
+====================
+
+2024-03-18 04:10:38,106 Brain Segmentation INFO: 
+====================
+Epoch: 95
+train loss: 0.1908604685337313
+eval metric: 0.0
+====================
+
+2024-03-18 04:11:19,624 Brain Segmentation INFO: 
+====================
+Epoch: 96
+train loss: 0.1948927728639495
+eval metric: 0.0
+====================
+
+2024-03-18 04:12:00,998 Brain Segmentation INFO: 
+====================
+Epoch: 97
+train loss: 0.19825290656217964
+eval metric: 0.0
+====================
+
+2024-03-18 04:12:42,908 Brain Segmentation INFO: 
+====================
+Epoch: 98
+train loss: 0.19086059299047275
+eval metric: 0.0
+====================
+
+2024-03-18 04:13:24,978 Brain Segmentation INFO: 
+====================
+Epoch: 99
+train loss: 0.1834679526346986
+eval metric: 0.0
+====================
+
+2024-03-18 04:14:07,661 Brain Segmentation INFO: 
+====================
+Epoch: 100
+train loss: 0.1821238321242153
+eval metric: 0.0
+====================
+
+2024-03-18 04:14:49,376 Brain Segmentation INFO: 
+====================
+Epoch: 101
+train loss: 0.18750018434178445
+eval metric: 0.0
+====================
+
+2024-03-18 04:15:31,090 Brain Segmentation INFO: 
+====================
+Epoch: 102
+train loss: 0.18548403468023064
+eval metric: 0.0
+====================
+
+2024-03-18 04:16:13,763 Brain Segmentation INFO: 
+====================
+Epoch: 103
+train loss: 0.1827958756156506
+eval metric: 0.0
+====================
+
+2024-03-18 04:16:56,006 Brain Segmentation INFO: 
+====================
+Epoch: 104
+train loss: 0.1875001400789266
+eval metric: 0.0
+====================
+
+2024-03-18 04:17:37,925 Brain Segmentation INFO: 
+====================
+Epoch: 105
+train loss: 0.18817215749332983
+eval metric: 0.0
+====================
+
+2024-03-18 04:18:19,519 Brain Segmentation INFO: 
+====================
+Epoch: 106
+train loss: 0.1895162769623341
+eval metric: 0.0
+====================
+
+2024-03-18 04:19:01,876 Brain Segmentation INFO: 
+====================
+Epoch: 107
+train loss: 0.1962366693362754
+eval metric: 0.0
+====================
+
+2024-03-18 04:19:44,199 Brain Segmentation INFO: 
+====================
+Epoch: 108
+train loss: 0.19220440778681028
+eval metric: 0.0
+====================
+
+2024-03-18 04:20:26,200 Brain Segmentation INFO: 
+====================
+Epoch: 109
+train loss: 0.190860310589434
+eval metric: 0.0
+====================
+
+2024-03-18 04:21:08,709 Brain Segmentation INFO: 
+====================
+Epoch: 110
+train loss: 0.19287642179637826
+eval metric: 0.0
+====================
+
+2024-03-18 04:21:50,348 Brain Segmentation INFO: 
+====================
+Epoch: 111
+train loss: 0.18481190106080425
+eval metric: 0.0
+====================
+
+2024-03-18 04:22:32,046 Brain Segmentation INFO: 
+====================
+Epoch: 112
+train loss: 0.1861559927303304
+eval metric: 0.0
+====================
+
+2024-03-18 04:23:14,583 Brain Segmentation INFO: 
+====================
+Epoch: 113
+train loss: 0.18077963654712964
+eval metric: 0.0
+====================
+
+2024-03-18 04:23:57,101 Brain Segmentation INFO: 
+====================
+Epoch: 114
+train loss: 0.19220436043957229
+eval metric: 0.0
+====================
+
+2024-03-18 04:24:39,840 Brain Segmentation INFO: 
+====================
+Epoch: 115
+train loss: 0.18346781616089164
+eval metric: 0.0
+====================
+
+2024-03-18 04:25:24,717 Brain Segmentation INFO: 
+====================
+Epoch: 116
+train loss: 0.18279577827742022
+eval metric: 0.0
+====================
+
+2024-03-18 04:26:09,558 Brain Segmentation INFO: 
+====================
+Epoch: 117
+train loss: 0.17338715521718867
+eval metric: 0.0
+====================
+
+2024-03-18 04:26:52,825 Brain Segmentation INFO: 
+====================
+Epoch: 118
+train loss: 0.18413986874523983
+eval metric: 0.0
+====================
+
+2024-03-18 04:27:31,030 Brain Segmentation INFO: 
+====================
+Epoch: 119
+train loss: 0.18548392728772214
+eval metric: 0.0
+====================
+
+2024-03-18 04:28:06,934 Brain Segmentation INFO: 
+====================
+Epoch: 120
+train loss: 0.18346780546570338
+eval metric: 0.0
+====================
+
+2024-03-18 04:28:40,310 Brain Segmentation INFO: 
+====================
+Epoch: 121
+train loss: 0.18951617045107708
+eval metric: 0.0
+====================
+
+2024-03-18 04:29:12,998 Brain Segmentation INFO: 
+====================
+Epoch: 122
+train loss: 0.18951617329511591
+eval metric: 0.0
+====================
+
+2024-03-18 04:29:45,395 Brain Segmentation INFO: 
+====================
+Epoch: 123
+train loss: 0.18413982832784292
+eval metric: 0.0
+====================
+
+2024-03-18 04:30:18,453 Brain Segmentation INFO: 
+====================
+Epoch: 124
+train loss: 0.19086023039555036
+eval metric: 0.0
+====================
+
+2024-03-18 04:30:51,368 Brain Segmentation INFO: 
+====================
+Epoch: 125
+train loss: 0.18615594342030506
+eval metric: 0.0
+====================
+
+2024-03-18 04:31:24,327 Brain Segmentation INFO: 
+====================
+Epoch: 126
+train loss: 0.19354840123685457
+eval metric: 0.0
+====================
+
+2024-03-18 04:31:57,107 Brain Segmentation INFO: 
+====================
+Epoch: 127
+train loss: 0.18212369240580067
+eval metric: 0.0
+====================
+
+2024-03-18 04:32:29,498 Brain Segmentation INFO: 
+====================
+Epoch: 128
+train loss: 0.18145163469417122
+eval metric: 0.0
+====================
+
+2024-03-18 04:33:01,771 Brain Segmentation INFO: 
+====================
+Epoch: 129
+train loss: 0.18145162980723126
+eval metric: 0.0
+====================
+
+2024-03-18 04:33:34,684 Brain Segmentation INFO: 
+====================
+Epoch: 130
+train loss: 0.1841398085397418
+eval metric: 0.0
+====================
+
+2024-03-18 04:34:07,714 Brain Segmentation INFO: 
+====================
+Epoch: 131
+train loss: 0.17876347442788462
+eval metric: 0.0
+====================
+
+2024-03-18 04:34:40,115 Brain Segmentation INFO: 
+====================
+Epoch: 132
+train loss: 0.18212365743614012
+eval metric: 0.0
+====================
+
+2024-03-18 04:35:13,180 Brain Segmentation INFO: 
+====================
+Epoch: 133
+train loss: 0.1895161538675267
+eval metric: 0.0
+====================
+
+2024-03-18 04:35:45,706 Brain Segmentation INFO: 
+====================
+Epoch: 134
+train loss: 0.1901881803748428
+eval metric: 0.0
+====================
+
+2024-03-18 04:36:18,713 Brain Segmentation INFO: 
+====================
+Epoch: 135
+train loss: 0.1827956948789858
+eval metric: 0.0
+====================
+
+2024-03-18 04:36:51,522 Brain Segmentation INFO: 
+====================
+Epoch: 136
+train loss: 0.18749999238919185
+eval metric: 0.0
+====================
+
+2024-03-18 04:37:25,060 Brain Segmentation INFO: 
+====================
+Epoch: 137
+train loss: 0.19018816415180442
+eval metric: 0.0
+====================
+
+2024-03-18 04:37:56,756 Brain Segmentation INFO: 
+====================
+Epoch: 138
+train loss: 0.1827956807789623
+eval metric: 0.0
+====================
+
+2024-03-18 04:38:29,584 Brain Segmentation INFO: 
+====================
+Epoch: 139
+train loss: 0.18346774305707664
+eval metric: 0.0
+====================
+
+2024-03-18 04:39:01,828 Brain Segmentation INFO: 
+====================
+Epoch: 140
+train loss: 0.18548384172621593
+eval metric: 0.0
+====================
+
+2024-03-18 04:39:34,241 Brain Segmentation INFO: 
+====================
+Epoch: 141
+train loss: 0.18145158241993636
+eval metric: 0.0
+====================
+
+2024-03-18 04:40:06,714 Brain Segmentation INFO: 
+====================
+Epoch: 142
+train loss: 0.19220428801672432
+eval metric: 0.0
+====================
+
+2024-03-18 04:40:39,546 Brain Segmentation INFO: 
+====================
+Epoch: 143
+train loss: 0.18346773007864592
+eval metric: 0.0
+====================
+
+2024-03-18 04:41:12,160 Brain Segmentation INFO: 
+====================
+Epoch: 144
+train loss: 0.18145161306345334
+eval metric: 0.0
+====================
+
+2024-03-18 04:41:44,334 Brain Segmentation INFO: 
+====================
+Epoch: 145
+train loss: 0.18413977196780584
+eval metric: 0.0
+====================
+
+2024-03-18 04:42:16,807 Brain Segmentation INFO: 
+====================
+Epoch: 146
+train loss: 0.188172030713289
+eval metric: 0.0
+====================
+
+2024-03-18 04:42:49,348 Brain Segmentation INFO: 
+====================
+Epoch: 147
+train loss: 0.1901881520145683
+eval metric: 0.0
+====================
+
+2024-03-18 04:43:22,286 Brain Segmentation INFO: 
+====================
+Epoch: 148
+train loss: 0.18346772999853217
+eval metric: 0.0
+====================
+
+2024-03-18 04:43:55,569 Brain Segmentation INFO: 
+====================
+Epoch: 149
+train loss: 0.18817201601241224
+eval metric: 0.0
+====================
+
+2024-03-18 04:44:28,733 Brain Segmentation INFO: 
+====================
+Epoch: 150
+train loss: 0.18279568646703998
+eval metric: 0.0
+====================
+
+2024-03-18 04:45:06,044 Brain Segmentation INFO: 
+====================
+Epoch: 151
+train loss: 0.1821236380886647
+eval metric: 0.0
+====================
+
+2024-03-18 04:45:42,731 Brain Segmentation INFO: 
+====================
+Epoch: 152
+train loss: 0.1868279206175958
+eval metric: 0.0
+====================
+
+2024-03-18 04:46:19,467 Brain Segmentation INFO: 
+====================
+Epoch: 153
+train loss: 0.18749996022351326
+eval metric: 0.0
+====================
+
+2024-03-18 04:46:55,917 Brain Segmentation INFO: 
+====================
+Epoch: 154
+train loss: 0.18077954317453088
+eval metric: 0.0
+====================
+
+2024-03-18 04:47:32,566 Brain Segmentation INFO: 
+====================
+Epoch: 155
+train loss: 0.19287633058685127
+eval metric: 0.0
+====================
+
+2024-03-18 04:48:09,776 Brain Segmentation INFO: 
+====================
+Epoch: 156
+train loss: 0.18615588681992665
+eval metric: 0.0
+====================
+
+2024-03-18 04:48:46,594 Brain Segmentation INFO: 
+====================
+Epoch: 157
+train loss: 0.18615589242789052
+eval metric: 0.0
+====================
+
+2024-03-18 04:49:23,105 Brain Segmentation INFO: 
+====================
+Epoch: 158
+train loss: 0.18279566651871126
+eval metric: 0.0
+====================
+
+2024-03-18 04:50:00,762 Brain Segmentation INFO: 
+====================
+Epoch: 159
+train loss: 0.1874999680746627
+eval metric: 0.0
+====================
+
+2024-03-18 04:50:37,209 Brain Segmentation INFO: 
+====================
+Epoch: 160
+train loss: 0.19354836041888884
+eval metric: 0.0
+====================
+
+2024-03-18 04:51:14,014 Brain Segmentation INFO: 
+====================
+Epoch: 161
+train loss: 0.18077953287991144
+eval metric: 0.0
+====================
+
+2024-03-18 04:51:49,816 Brain Segmentation INFO: 
+====================
+Epoch: 162
+train loss: 0.17204298046968317
+eval metric: 0.0
+====================
+
+2024-03-18 04:52:26,225 Brain Segmentation INFO: 
+====================
+Epoch: 163
+train loss: 0.18145159015091517
+eval metric: 0.0
+====================
+
+2024-03-18 04:53:02,085 Brain Segmentation INFO: 
+====================
+Epoch: 164
+train loss: 0.19153222998463978
+eval metric: 0.0
+====================
+
+2024-03-18 04:53:38,506 Brain Segmentation INFO: 
+====================
+Epoch: 165
+train loss: 0.188172008441661
+eval metric: 0.0
+====================
+
+2024-03-18 04:54:14,895 Brain Segmentation INFO: 
+====================
+Epoch: 166
+train loss: 0.19153223006475356
+eval metric: 0.0
+====================
+
+2024-03-18 04:54:51,703 Brain Segmentation INFO: 
+====================
+Epoch: 167
+train loss: 0.19086017972359093
+eval metric: 0.0
+====================
+
+2024-03-18 04:55:28,643 Brain Segmentation INFO: 
+====================
+Epoch: 168
+train loss: 0.1895160829267835
+eval metric: 0.0
+====================
+
+2024-03-18 04:56:05,305 Brain Segmentation INFO: 
+====================
+Epoch: 169
+train loss: 0.18682791753321565
+eval metric: 0.0
+====================
+
+2024-03-18 04:56:41,639 Brain Segmentation INFO: 
+====================
+Epoch: 170
+train loss: 0.19018812898185947
+eval metric: 0.0
+====================
+
+2024-03-18 04:57:18,197 Brain Segmentation INFO: 
+====================
+Epoch: 171
+train loss: 0.18884405209332383
+eval metric: 0.0
+====================
+
+2024-03-18 04:57:54,215 Brain Segmentation INFO: 
+====================
+Epoch: 172
+train loss: 0.19287630190612168
+eval metric: 0.0
+====================
+
+2024-03-18 04:58:31,119 Brain Segmentation INFO: 
+====================
+Epoch: 173
+train loss: 0.18615588357531895
+eval metric: 0.0
+====================
+
+2024-03-18 04:59:07,770 Brain Segmentation INFO: 
+====================
+Epoch: 174
+train loss: 0.18346771001014658
+eval metric: 0.0
+====================
+
+2024-03-18 04:59:43,956 Brain Segmentation INFO: 
+====================
+Epoch: 175
+train loss: 0.18481180424331337
+eval metric: 0.0
+====================
+
+2024-03-18 05:00:20,511 Brain Segmentation INFO: 
+====================
+Epoch: 176
+train loss: 0.191532211117847
+eval metric: 0.0
+====================
+
+2024-03-18 05:00:57,336 Brain Segmentation INFO: 
+====================
+Epoch: 177
+train loss: 0.1794354363635022
+eval metric: 0.0
+====================
+
+2024-03-18 05:01:33,823 Brain Segmentation INFO: 
+====================
+Epoch: 178
+train loss: 0.18749995713913312
+eval metric: 0.0
+====================
+
+2024-03-18 05:02:10,985 Brain Segmentation INFO: 
+====================
+Epoch: 179
+train loss: 0.18413974420838458
+eval metric: 0.0
+====================
+
+2024-03-18 05:02:47,200 Brain Segmentation INFO: 
+====================
+Epoch: 180
+train loss: 0.19018813266709286
+eval metric: 0.0
+====================
+
+2024-03-18 05:03:23,466 Brain Segmentation INFO: 
+====================
+Epoch: 181
+train loss: 0.1922042530470638
+eval metric: 0.0
+====================
+
+2024-03-18 05:04:00,680 Brain Segmentation INFO: 
+====================
+Epoch: 182
+train loss: 0.18682790543603642
+eval metric: 0.0
+====================
+
+2024-03-18 05:04:38,223 Brain Segmentation INFO: 
+====================
+Epoch: 183
+train loss: 0.18212362102443172
+eval metric: 0.0
+====================
+
+2024-03-18 05:05:14,899 Brain Segmentation INFO: 
+====================
+Epoch: 184
+train loss: 0.18279564977493337
+eval metric: 0.0
+====================
+
+2024-03-18 05:05:51,142 Brain Segmentation INFO: 
+====================
+Epoch: 185
+train loss: 0.18615587980997178
+eval metric: 0.0
+====================
+
+2024-03-18 05:06:28,100 Brain Segmentation INFO: 
+====================
+Epoch: 186
+train loss: 0.18682791408832355
+eval metric: 0.0
+====================
+
+2024-03-18 05:07:05,059 Brain Segmentation INFO: 
+====================
+Epoch: 187
+train loss: 0.19018812473582966
+eval metric: 0.0
+====================
+
+2024-03-18 05:07:42,172 Brain Segmentation INFO: 
+====================
+Epoch: 188
+train loss: 0.1848117809702632
+eval metric: 0.0
+====================
+
+2024-03-18 05:08:18,490 Brain Segmentation INFO: 
+====================
+Epoch: 189
+train loss: 0.18951608312706794
+eval metric: 0.0
+====================
+
+2024-03-18 05:08:55,074 Brain Segmentation INFO: 
+====================
+Epoch: 190
+train loss: 0.18951608008274468
+eval metric: 0.0
+====================
+
+2024-03-18 05:09:32,103 Brain Segmentation INFO: 
+====================
+Epoch: 191
+train loss: 0.18615588489719617
+eval metric: 0.0
+====================
+
+2024-03-18 05:10:09,016 Brain Segmentation INFO: 
+====================
+Epoch: 192
+train loss: 0.17943545591126206
+eval metric: 0.0
+====================
+
+2024-03-18 05:10:45,824 Brain Segmentation INFO: 
+====================
+Epoch: 193
+train loss: 0.19690856938400575
+eval metric: 0.0
+====================
+
+2024-03-18 05:11:22,226 Brain Segmentation INFO: 
+====================
+Epoch: 194
+train loss: 0.18615588273412437
+eval metric: 0.0
+====================
+
+2024-03-18 05:11:59,079 Brain Segmentation INFO: 
+====================
+Epoch: 195
+train loss: 0.18548383788075498
+eval metric: 0.0
+====================
+
+2024-03-18 05:12:35,190 Brain Segmentation INFO: 
+====================
+Epoch: 196
+train loss: 0.18145158278044834
+eval metric: 0.0
+====================
+
+2024-03-18 05:13:11,986 Brain Segmentation INFO: 
+====================
+Epoch: 197
+train loss: 0.17943545559080698
+eval metric: 0.0
+====================
+
+2024-03-18 05:13:48,384 Brain Segmentation INFO: 
+====================
+Epoch: 198
+train loss: 0.18951608653190316
+eval metric: 0.0
+====================
+
+2024-03-18 05:14:25,025 Brain Segmentation INFO: 
+====================
+Epoch: 199
+train loss: 0.18279567356872303
+eval metric: 0.0
+====================
+
+2024-03-18 05:15:01,550 Brain Segmentation INFO: 
+====================
+Epoch: 200
+train loss: 0.1760752292009451
+eval metric: 0.0
+====================
+
+2024-03-18 05:15:38,075 Brain Segmentation INFO: 
+====================
+Epoch: 201
+train loss: 0.18548383804098253
+eval metric: 0.0
+====================
+
+2024-03-18 05:16:13,986 Brain Segmentation INFO: 
+====================
+Epoch: 202
+train loss: 0.18749995717919002
+eval metric: 0.0
+====================
+
+2024-03-18 05:16:50,602 Brain Segmentation INFO: 
+====================
+Epoch: 203
+train loss: 0.18077953612451914
+eval metric: 0.0
+====================
+
+2024-03-18 05:17:27,106 Brain Segmentation INFO: 
+====================
+Epoch: 204
+train loss: 0.18077954565805773
+eval metric: 0.0
+====================
+
+2024-03-18 05:18:03,429 Brain Segmentation INFO: 
+====================
+Epoch: 205
+train loss: 0.18145156952161942
+eval metric: 0.0
+====================
+
+2024-03-18 05:18:39,552 Brain Segmentation INFO: 
+====================
+Epoch: 206
+train loss: 0.1861558771261605
+eval metric: 0.0
+====================
+
+2024-03-18 05:19:16,238 Brain Segmentation INFO: 
+====================
+Epoch: 207
+train loss: 0.18548383884212022
+eval metric: 0.0
+====================
+
+2024-03-18 05:19:52,459 Brain Segmentation INFO: 
+====================
+Epoch: 208
+train loss: 0.19354833486259623
+eval metric: 0.0
+====================
+
+2024-03-18 05:20:28,576 Brain Segmentation INFO: 
+====================
+Epoch: 209
+train loss: 0.19489243029746958
+eval metric: 0.0
+====================
+
+2024-03-18 05:21:05,743 Brain Segmentation INFO: 
+====================
+Epoch: 210
+train loss: 0.1935483421529493
+eval metric: 0.0
+====================
+
+2024-03-18 05:21:42,057 Brain Segmentation INFO: 
+====================
+Epoch: 211
+train loss: 0.18749994103626538
+eval metric: 0.0
+====================
+
+2024-03-18 05:22:19,396 Brain Segmentation INFO: 
+====================
+Epoch: 212
+train loss: 0.18279566439569636
+eval metric: 0.0
+====================
+
+2024-03-18 05:22:56,609 Brain Segmentation INFO: 
+====================
+Epoch: 213
+train loss: 0.18077952438785183
+eval metric: 0.0
+====================
+
+2024-03-18 05:23:32,891 Brain Segmentation INFO: 
+====================
+Epoch: 214
+train loss: 0.19086017163210017
+eval metric: 0.0
+====================
+
+2024-03-18 05:24:10,757 Brain Segmentation INFO: 
+====================
+Epoch: 215
+train loss: 0.18749995765987262
+eval metric: 0.0
+====================
+
+2024-03-18 05:24:47,889 Brain Segmentation INFO: 
+====================
+Epoch: 216
+train loss: 0.18346769899450321
+eval metric: 0.0
+====================
+
+2024-03-18 05:25:24,834 Brain Segmentation INFO: 
+====================
+Epoch: 217
+train loss: 0.18951608549042415
+eval metric: 0.0
+====================
+
+2024-03-18 05:26:01,095 Brain Segmentation INFO: 
+====================
+Epoch: 218
+train loss: 0.18481178241231108
+eval metric: 0.0
+====================
+
+2024-03-18 05:26:37,189 Brain Segmentation INFO: 
+====================
+Epoch: 219
+train loss: 0.19153221039682305
+eval metric: 0.0
+====================
+
+2024-03-18 05:27:14,229 Brain Segmentation INFO: 
+====================
+Epoch: 220
+train loss: 0.1861558776068431
+eval metric: 0.0
+====================
+
+2024-03-18 05:27:50,849 Brain Segmentation INFO: 
+====================
+Epoch: 221
+train loss: 0.18346770552377548
+eval metric: 0.0
+====================
+
+2024-03-18 05:28:27,440 Brain Segmentation INFO: 
+====================
+Epoch: 222
+train loss: 0.18749996154539048
+eval metric: 0.0
+====================
+
+2024-03-18 05:29:04,828 Brain Segmentation INFO: 
+====================
+Epoch: 223
+train loss: 0.1928763060720377
+eval metric: 0.0
+====================
+
+2024-03-18 05:29:40,687 Brain Segmentation INFO: 
+====================
+Epoch: 224
+train loss: 0.19086017884233947
+eval metric: 0.0
+====================
+
+2024-03-18 05:30:17,158 Brain Segmentation INFO: 
+====================
+Epoch: 225
+train loss: 0.19354834019016193
+eval metric: 0.0
+====================
+
+2024-03-18 05:30:53,367 Brain Segmentation INFO: 
+====================
+Epoch: 226
+train loss: 0.18817199606408355
+eval metric: 0.0
+====================
+
+2024-03-18 05:31:30,579 Brain Segmentation INFO: 
+====================
+Epoch: 227
+train loss: 0.18749994660417238
+eval metric: 0.0
+====================
+
+2024-03-18 05:32:07,394 Brain Segmentation INFO: 
+====================
+Epoch: 228
+train loss: 0.18346769066267116
+eval metric: 0.0
+====================
+
+2024-03-18 05:32:43,450 Brain Segmentation INFO: 
+====================
+Epoch: 229
+train loss: 0.1868279197764012
+eval metric: 0.0
+====================
+
+2024-03-18 05:33:20,200 Brain Segmentation INFO: 
+====================
+Epoch: 230
+train loss: 0.18481178064980813
+eval metric: 0.0
+====================
+
+2024-03-18 05:33:56,309 Brain Segmentation INFO: 
+====================
+Epoch: 231
+train loss: 0.1881720015518768
+eval metric: 0.0
+====================
+
+2024-03-18 05:34:33,905 Brain Segmentation INFO: 
+====================
+Epoch: 232
+train loss: 0.18682791961617368
+eval metric: 0.0
+====================
+
+2024-03-18 05:35:11,111 Brain Segmentation INFO: 
+====================
+Epoch: 233
+train loss: 0.1901881249361141
+eval metric: 0.0
+====================
+
+2024-03-18 05:35:47,105 Brain Segmentation INFO: 
+====================
+Epoch: 234
+train loss: 0.1814515855443734
+eval metric: 0.0
+====================
+
+2024-03-18 05:36:23,771 Brain Segmentation INFO: 
+====================
+Epoch: 235
+train loss: 0.18884403086317483
+eval metric: 0.0
+====================
+
+2024-03-18 05:36:59,694 Brain Segmentation INFO: 
+====================
+Epoch: 236
+train loss: 0.1821236199829527
+eval metric: 0.0
+====================
+
+2024-03-18 05:37:35,171 Brain Segmentation INFO: 
+====================
+Epoch: 237
+train loss: 0.1861558822133849
+eval metric: 0.0
+====================
+
+2024-03-18 05:38:11,896 Brain Segmentation INFO: 
+====================
+Epoch: 238
+train loss: 0.17943544285271756
+eval metric: 0.0
+====================
+
+2024-03-18 05:38:48,820 Brain Segmentation INFO: 
+====================
+Epoch: 239
+train loss: 0.19153222862270572
+eval metric: 0.0
+====================
+
+2024-03-18 05:39:25,069 Brain Segmentation INFO: 
+====================
+Epoch: 240
+train loss: 0.19018813927647887
+eval metric: 0.0
+====================
+
+2024-03-18 05:40:00,555 Brain Segmentation INFO: 
+====================
+Epoch: 241
+train loss: 0.1908601830082555
+eval metric: 0.0
+====================
+
+2024-03-18 05:40:37,095 Brain Segmentation INFO: 
+====================
+Epoch: 242
+train loss: 0.18481178709896662
+eval metric: 0.0
+====================
+
+2024-03-18 05:41:13,768 Brain Segmentation INFO: 
+====================
+Epoch: 243
+train loss: 0.18212361930198567
+eval metric: 0.0
+====================
+
+2024-03-18 05:41:50,391 Brain Segmentation INFO: 
+====================
+Epoch: 244
+train loss: 0.18481178509612237
+eval metric: 0.0
+====================
+
+2024-03-18 05:42:26,836 Brain Segmentation INFO: 
+====================
+Epoch: 245
+train loss: 0.19220426382236583
+eval metric: 0.0
+====================
+
+2024-03-18 05:43:03,556 Brain Segmentation INFO: 
+====================
+Epoch: 246
+train loss: 0.19287629481605303
+eval metric: 0.0
+====================
+
+2024-03-18 05:43:41,114 Brain Segmentation INFO: 
+====================
+Epoch: 247
+train loss: 0.1841397484544144
+eval metric: 0.0
+====================
+
+2024-03-18 05:44:18,265 Brain Segmentation INFO: 
+====================
+Epoch: 248
+train loss: 0.18212360892725246
+eval metric: 0.0
+====================
+
+2024-03-18 05:44:54,115 Brain Segmentation INFO: 
+====================
+Epoch: 249
+train loss: 0.18749996054396834
+eval metric: 0.0
+====================
+
+2024-03-18 05:45:30,780 Brain Segmentation INFO: 
+====================
+Epoch: 250
+train loss: 0.18749996290732457
+eval metric: 0.0
+====================
+
+2024-03-18 05:46:07,414 Brain Segmentation INFO: 
+====================
+Epoch: 251
+train loss: 0.18682791753321565
+eval metric: 0.0
+====================
+
+2024-03-18 05:46:44,232 Brain Segmentation INFO: 
+====================
+Epoch: 252
+train loss: 0.18413975386209386
+eval metric: 0.0
+====================
+
+2024-03-18 05:47:20,748 Brain Segmentation INFO: 
+====================
+Epoch: 253
+train loss: 0.18481179130493955
+eval metric: 0.0
+====================
+
+2024-03-18 05:47:57,159 Brain Segmentation INFO: 
+====================
+Epoch: 254
+train loss: 0.19220424940188727
+eval metric: 0.0
+====================
+
+2024-03-18 05:48:33,301 Brain Segmentation INFO: 
+====================
+Epoch: 255
+train loss: 0.19489242416876618
+eval metric: 0.0
+====================
+
+2024-03-18 05:49:10,438 Brain Segmentation INFO: 
+====================
+Epoch: 256
+train loss: 0.17338707342102963
+eval metric: 0.0
+====================
+
+2024-03-18 05:49:47,395 Brain Segmentation INFO: 
+====================
+Epoch: 257
+train loss: 0.19018813346823057
+eval metric: 0.0
+====================
+
+2024-03-18 05:50:24,112 Brain Segmentation INFO: 
+====================
+Epoch: 258
+train loss: 0.18481178798021808
+eval metric: 0.0
+====================
+
+2024-03-18 05:50:59,727 Brain Segmentation INFO: 
+====================
+Epoch: 259
+train loss: 0.18279566491643587
+eval metric: 0.0
+====================
+
+2024-03-18 05:51:37,165 Brain Segmentation INFO: 
+====================
+Epoch: 260
+train loss: 0.1868279064775154
+eval metric: 0.0
+====================
+
+2024-03-18 05:52:13,195 Brain Segmentation INFO: 
+====================
+Epoch: 261
+train loss: 0.1928762901293975
+eval metric: 0.0
+====================
+
+2024-03-18 05:52:49,826 Brain Segmentation INFO: 
+====================
+Epoch: 262
+train loss: 0.17674727265232354
+eval metric: 0.0
+====================
+
+2024-03-18 05:53:25,999 Brain Segmentation INFO: 
+====================
+Epoch: 263
+train loss: 0.18615587404178036
+eval metric: 0.0
+====================
+
+2024-03-18 05:54:01,627 Brain Segmentation INFO: 
+====================
+Epoch: 264
+train loss: 0.1767472788611407
+eval metric: 0.0
+====================
+
+2024-03-18 05:54:38,484 Brain Segmentation INFO: 
+====================
+Epoch: 265
+train loss: 0.190188133668515
+eval metric: 0.0
+====================
+
+2024-03-18 05:55:14,806 Brain Segmentation INFO: 
+====================
+Epoch: 266
+train loss: 0.184811800197568
+eval metric: 0.0
+====================
+
+2024-03-18 05:55:51,530 Brain Segmentation INFO: 
+====================
+Epoch: 267
+train loss: 0.18548383635859336
+eval metric: 0.0
+====================
+
+2024-03-18 05:56:27,896 Brain Segmentation INFO: 
+====================
+Epoch: 268
+train loss: 0.19287630338822642
+eval metric: 0.0
+====================
+
+2024-03-18 05:57:05,048 Brain Segmentation INFO: 
+====================
+Epoch: 269
+train loss: 0.17204298880151522
+eval metric: 0.0
+====================
+
+2024-03-18 05:57:41,487 Brain Segmentation INFO: 
+====================
+Epoch: 270
+train loss: 0.1861558778872413
+eval metric: 0.0
+====================
+
+2024-03-18 05:58:18,041 Brain Segmentation INFO: 
+====================
+Epoch: 271
+train loss: 0.19220426029735996
+eval metric: 0.0
+====================
+
+2024-03-18 05:58:54,511 Brain Segmentation INFO: 
+====================
+Epoch: 272
+train loss: 0.18615586362699027
+eval metric: 0.0
+====================
+
+2024-03-18 05:59:31,509 Brain Segmentation INFO: 
+====================
+Epoch: 273
+train loss: 0.18077952603018413
+eval metric: 0.0
+====================
+
+2024-03-18 06:00:08,688 Brain Segmentation INFO: 
+====================
+Epoch: 274
+train loss: 0.18615586454829863
+eval metric: 0.0
+====================
+
+2024-03-18 06:00:44,681 Brain Segmentation INFO: 
+====================
+Epoch: 275
+train loss: 0.19354835372938906
+eval metric: 0.0
+====================
+
+2024-03-18 06:01:21,618 Brain Segmentation INFO: 
+====================
+Epoch: 276
+train loss: 0.18615587199887923
+eval metric: 0.0
+====================
+
+2024-03-18 06:01:58,507 Brain Segmentation INFO: 
+====================
+Epoch: 277
+train loss: 0.18481176819211692
+eval metric: 0.0
+====================
+
+2024-03-18 06:02:35,825 Brain Segmentation INFO: 
+====================
+Epoch: 278
+train loss: 0.18615587700598984
+eval metric: 0.0
+====================
+
+2024-03-18 06:03:11,780 Brain Segmentation INFO: 
+====================
+Epoch: 279
+train loss: 0.1942203928946808
+eval metric: 0.0
+====================
+
+2024-03-18 06:03:47,364 Brain Segmentation INFO: 
+====================
+Epoch: 280
+train loss: 0.1794354539484747
+eval metric: 0.0
+====================
+
+2024-03-18 06:04:25,489 Brain Segmentation INFO: 
+====================
+Epoch: 281
+train loss: 0.1834676998356978
+eval metric: 0.0
+====================
+
+2024-03-18 06:05:02,068 Brain Segmentation INFO: 
+====================
+Epoch: 282
+train loss: 0.18481179410892148
+eval metric: 0.0
+====================
+
+2024-03-18 06:05:38,662 Brain Segmentation INFO: 
+====================
+Epoch: 283
+train loss: 0.18279565598375053
+eval metric: 0.0
+====================
+
+2024-03-18 06:06:15,122 Brain Segmentation INFO: 
+====================
+Epoch: 284
+train loss: 0.17943545402858846
+eval metric: 0.0
+====================
+
+2024-03-18 06:06:51,326 Brain Segmentation INFO: 
+====================
+Epoch: 285
+train loss: 0.17137093830012506
+eval metric: 0.0
+====================
+
+2024-03-18 06:07:28,108 Brain Segmentation INFO: 
+====================
+Epoch: 286
+train loss: 0.19422038131824104
+eval metric: 0.0
+====================
+
+2024-03-18 06:08:04,899 Brain Segmentation INFO: 
+====================
+Epoch: 287
+train loss: 0.18145155670341626
+eval metric: 0.0
+====================
+
+2024-03-18 06:08:40,883 Brain Segmentation INFO: 
+====================
+Epoch: 288
+train loss: 0.17809134845932326
+eval metric: 0.0
+====================
+
+2024-03-18 06:09:16,974 Brain Segmentation INFO: 
+====================
+Epoch: 289
+train loss: 0.19690855688625766
+eval metric: 0.0
+====================
+
+2024-03-18 06:09:54,070 Brain Segmentation INFO: 
+====================
+Epoch: 290
+train loss: 0.1821236189414737
+eval metric: 0.0
+====================
+
+2024-03-18 06:10:31,597 Brain Segmentation INFO: 
+====================
+Epoch: 291
+train loss: 0.18951608541031037
+eval metric: 0.0
+====================
+
+2024-03-18 06:11:07,923 Brain Segmentation INFO: 
+====================
+Epoch: 292
+train loss: 0.18749996763403698
+eval metric: 0.0
+====================
+
+2024-03-18 06:11:44,504 Brain Segmentation INFO: 
+====================
+Epoch: 293
+train loss: 0.1827956609107474
+eval metric: 0.0
+====================
+
+2024-03-18 06:12:20,828 Brain Segmentation INFO: 
+====================
+Epoch: 294
+train loss: 0.19086016950908527
+eval metric: 0.0
+====================
+
+2024-03-18 06:12:57,250 Brain Segmentation INFO: 
+====================
+Epoch: 295
+train loss: 0.18077953103729474
+eval metric: 0.0
+====================
+
+2024-03-18 06:13:33,966 Brain Segmentation INFO: 
+====================
+Epoch: 296
+train loss: 0.19086017675938144
+eval metric: 0.0
+====================
+
+2024-03-18 06:14:10,922 Brain Segmentation INFO: 
+====================
+Epoch: 297
+train loss: 0.1874999553766302
+eval metric: 0.0
+====================
+
+2024-03-18 06:14:47,384 Brain Segmentation INFO: 
+====================
+Epoch: 298
+train loss: 0.18145156431422438
+eval metric: 0.0
+====================
+
+2024-03-18 06:15:23,626 Brain Segmentation INFO: 
+====================
+Epoch: 299
+train loss: 0.183467699074617
+eval metric: 0.0
+====================
+

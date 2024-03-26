@@ -1,0 +1,24 @@
+2024-03-19 01:35:09,712 Brain Segmentation INFO: Namespace(background=True
+ device='cuda'
+ epochs=300
+ eval_batch_size=4
+ fig_dir='fig'
+ image_dir='/mnt/strokeapp/Datasets/Seg_ctmri_2d'
+ input='fake_mri'
+ lr=0.001
+ mask_dir='/mnt/strokeapp/Datasets/Seg_mask_2d'
+ model_name='flexible_unet'
+ name='flexible_unet_resvit_res_ls'
+ output_dir='output/flexible_unet_resvit_res_ls'
+ roi=(128
+ 128)
+ seed=123
+ spatial_size=(96
+ 96
+ 96)
+ sw_batch=4
+ synthesize_model='resvit_res_ls'
+ test_batch_size=4
+ train_batch_size=8
+ weight_decay=0.0001)
+2024-03-19 01:35:34,759 Brain Segmentation INFO: DICE SCORE: 0.07425582408905029
